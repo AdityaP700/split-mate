@@ -15,6 +15,8 @@ import {
   EthBalance,
 } from "@coinbase/onchainkit/identity";
 import TransactionComponent from "./TransactionComponent";
+import SplitBill from "@/components/SplitBill";
+import Splitting from "@/components/Splitting";
 
 export default function App() {
   return (
@@ -50,6 +52,7 @@ export default function App() {
       </header>
       <main>
         <TransactionComponent />
+        <Splitting />
       </main>
     </div>
   );
