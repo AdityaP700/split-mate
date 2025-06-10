@@ -16,6 +16,8 @@ import {
 import TransactionComponent from "./TransactionComponent";
 import Splitting from "@/components/Splitting";
 import XMTPBillSplitting from "@/app/service/XMTPBillSplitting";
+import BillDashboard from './service/BillDashboard'; // 👈 IMPORT
+
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen font-sans dark:bg-background dark:text-white bg-white text-black">
@@ -51,6 +53,7 @@ export default function App() {
       <main>
         <TransactionComponent />
         <XMTPBillSplitting />
+              <BillDashboard />
         <Splitting />
       </main>
     </div>
