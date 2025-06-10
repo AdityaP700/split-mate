@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ConnectWallet,
   Wallet,
@@ -51,7 +50,7 @@ export default function App() {
       </header>
       <main>
         <TransactionComponent />
-        <XMTPBillSplitting/>
+        <XMTPBillSplitting />
         <Splitting />
       </main>
     </div>
