@@ -13,49 +13,64 @@ import {
   Identity,
   EthBalance,
 } from "@coinbase/onchainkit/identity";
-import TransactionComponent from "./TransactionComponent";
-import Splitting from "@/components/Splitting";
-import XMTPBillSplitting from "@/app/service/XMTPBillSplitting";
-import BillDashboard from './service/BillDashboard'; // 👈 IMPORT
+import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
 
 export default function App() {
+  const router = useRouter();
+  const { address, isConnected } = useAccount();
+  setTimeout(() => {
+    if (address) {
+      router.push("/splitamount");
+    }
+  }, 3000);
   return (
-    <div className="flex flex-col min-h-screen font-sans dark:bg-background dark:text-white bg-white text-black">
-      <header className="pt-4 pr-4">
-        <div className="flex justify-end">
-          <div className="wallet-container">
-            <Wallet>
-              <ConnectWallet>
-                <Avatar className="h-6 w-6" />
-                <Name />
-              </ConnectWallet>
-              <WalletDropdown>
-                <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-                  <Avatar />
-                  <Name />
-                  <Address />
-                  <EthBalance />
-                </Identity>
-                <WalletDropdownLink
-                  icon="wallet"
-                  href="https://keys.coinbase.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Wallet
-                </WalletDropdownLink>
-                <WalletDropdownDisconnect />
-              </WalletDropdown>
-            </Wallet>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-white via-sky-100 to-blue-200 dark:from-background dark:to-gray-900 text-black dark:text-white transition-colors">
+      <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 shadow backdrop-blur-md bg-white/80 dark:bg-gray-900/80">
+        <h1 className="text-3xl font-extrabold text-blue-600 dark:text-blue-300 tracking-tight">
+          SplitMate
+        </h1>
+        <h1 className="text-xl font-bold text-blue-600 dark:text-white tracking-tight">
+          {isConnected && address
+            ? `${address.slice(0, 6)}...${address.slice(-4)}`
+            : "Connecting..."}
+        </h1>
       </header>
-      <main>
-        <TransactionComponent />
-        <XMTPBillSplitting />
-              <BillDashboard />
-        <Splitting />
-      </main>
+      <div className="flex items-center justify-center h-screen gap-3">
+        <Wallet>
+          <ConnectWallet>
+            <div className="flex items-center gap-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 dark:from-purple-800 dark:via-blue-700 dark:to-blue-900 px-7 py-3 shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-200 cursor-pointer">
+              <Avatar className="h-10 w-10 ring-2 ring-white dark:ring-purple-300" />
+              <Name className="text-white text-lg font-bold drop-shadow" />
+            </div>
+          </ConnectWallet>
+
+          <WalletDropdown>
+            <Identity
+              className="px-4 pt-3 pb-2 space-y-2 border-b border-gray-200 dark:border-gray-700"
+              hasCopyAddressOnClick
+            >
+              <div className="flex items-center gap-3">
+                <Avatar className="h-10 w-10" />
+                <div>
+                  <Name className="text-sm font-semibold" />
+                  <Address className="text-xs text-gray-500 dark:text-gray-400" />
+                </div>
+              </div>
+              <EthBalance className="text-right text-sm font-medium" />
+            </Identity>
+            <WalletDropdownLink
+              icon="wallet"
+              href="https://keys.coinbase.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Manage Wallet
+            </WalletDropdownLink>
+            <WalletDropdownDisconnect />
+          </WalletDropdown>
+        </Wallet>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import { AmountProvider } from "./context/AmountContext";
-import {XMTPProvider} from "./context/XMTPContext";
+import { XMTPProvider } from "./context/XMTPContext";
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
   description:
@@ -19,7 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-background dark">
         <Providers>
-          <AmountProvider><XMTPProvider>{children}</XMTPProvider></AmountProvider>
+          <AmountProvider>
+            <XMTPProvider>{children}</XMTPProvider>
+          </AmountProvider>
         </Providers>
       </body>
     </html>

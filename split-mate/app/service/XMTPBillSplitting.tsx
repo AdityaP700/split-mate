@@ -16,7 +16,7 @@ type Friend = {
 const XMTPBillSplitting = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
   const [billDescription, setBillDescription] = useState("");
-  const [totalAmount, setTotalAmount] = useState<string>(""); 
+  const [totalAmount, setTotalAmount] = useState<string>("");
   const [isSplitCalculated, setIsSplitCalculated] = useState(false);
 
   const { sendGroupMessage, isConnected: isXmtpConnected } = useXMTP();
@@ -25,10 +25,18 @@ const XMTPBillSplitting = () => {
   useEffect(() => {
     const defaultFriends: Friend[] = [
       {
-        id: 1, name: "Alice", address: process.env.NEXT_PUBLIC_ALICE_WALLET_ADDRESS || "", owedAmount: 0, hasPaid: false,
+        id: 1,
+        name: "Alice",
+        address: process.env.NEXT_PUBLIC_ALICE_WALLET_ADDRESS || "",
+        owedAmount: 0,
+        hasPaid: false,
       },
       {
-        id: 2, name: "Bob", address: process.env.NEXT_PUBLIC_BOB_WALLET_ADDRESS || "", owedAmount: 0, hasPaid: false,
+        id: 2,
+        name: "Bob",
+        address: process.env.NEXT_PUBLIC_BOB_WALLET_ADDRESS || "",
+        owedAmount: 0,
+        hasPaid: false,
       },
     ];
     setFriends(defaultFriends);
@@ -41,7 +49,7 @@ const XMTPBillSplitting = () => {
       return;
     }
     const splitAmount = numericAmount / (friends.length + 1);
-    const updatedFriends = friends.map(friend => ({
+    const updatedFriends = friends.map((friend) => ({
       ...friend,
       owedAmount: Math.round(splitAmount * 100) / 100,
     }));
@@ -57,23 +65,29 @@ const XMTPBillSplitting = () => {
     }
     try {
       const recipientAddresses = friends
-        .map(f => f.address)
-        .filter(addr => addr && addr.toLowerCase() !== userAddress?.toLowerCase());
+        .map((f) => f.address)
+        .filter(
+          (addr) => addr && addr.toLowerCase() !== userAddress?.toLowerCase()
+        );
       if (recipientAddresses.length === 0) {
         alert("No valid recipient addresses to send notifications to.");
         return;
       }
       const messagePayload = {
-        type: "splitmate_bill_request", version: "1.0",
+        type: "splitmate_bill_request",
+        version: "1.0",
         description: billDescription || "Group Expense",
         totalAmount: parseFloat(totalAmount),
         yourShare: friends[0]?.owedAmount || 0,
-        currency: "USD", payToAddress: userAddress,
+        currency: "USD",
+        payToAddress: userAddress,
         paymentChainId: 84531, // Base Sepolia Testnet
       };
       const message = JSON.stringify(messagePayload);
       await sendGroupMessage(recipientAddresses, message);
-      alert(`Successfully sent bill requests to ${recipientAddresses.length} friends!`);
+      alert(
+        `Successfully sent bill requests to ${recipientAddresses.length} friends!`
+      );
     } catch (error) {
       console.error("Failed to send notifications:", error);
       alert("An error occurred while sending notifications.");
@@ -82,21 +96,27 @@ const XMTPBillSplitting = () => {
 
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">XMTP Bill Splitting</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        XMTP Bill Splitting
+      </h2>
       <div className="mb-4 p-3 rounded-lg bg-gray-100">
-        <span className="text-sm font-medium">
+        <span className="text-sm text-gray-900 font-medium">
           XMTP Status: {isXmtpConnected ? "🟢 Connected" : "🔴 Disconnected"}
         </span>
       </div>
       <div className="mb-6 space-y-4">
         <input
-          type="text" placeholder="Bill description (e.g., Dinner at Restaurant)"
-          value={billDescription} onChange={(e) => setBillDescription(e.target.value)}
+          type="text"
+          placeholder="Bill description (e.g., Dinner at Restaurant)"
+          value={billDescription}
+          onChange={(e) => setBillDescription(e.target.value)}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 text-black"
         />
         <div className="flex items-center gap-4">
           <input
-            type="number" placeholder="Total Amount" value={totalAmount}
+            type="number"
+            placeholder="Total Amount"
+            value={totalAmount}
             onChange={(e) => {
               setTotalAmount(e.target.value);
               setIsSplitCalculated(false);
@@ -104,7 +124,8 @@ const XMTPBillSplitting = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 text-black"
           />
           <button
-            onClick={calculateSplit} disabled={!totalAmount || parseFloat(totalAmount) <= 0}
+            onClick={calculateSplit}
+            disabled={!totalAmount || parseFloat(totalAmount) <= 0}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 transition"
           >
             Calculate Split
@@ -113,17 +134,23 @@ const XMTPBillSplitting = () => {
       </div>
       <div className="space-y-3 mb-6">
         {friends.map((friend) => (
-          <div key={friend.id} className="flex items-center justify-between p-4 border rounded-lg bg-gray-50">
+          <div
+            key={friend.id}
+            className="flex items-center justify-between p-4 border rounded-lg bg-gray-50"
+          >
             <div>
               <h3 className="font-semibold text-gray-800">{friend.name}</h3>
               <p className="text-sm text-gray-600 truncate">{friend.address}</p>
-              <p className="text-lg font-bold text-purple-600">${friend.owedAmount.toFixed(2)}</p>
+              <p className="text-lg font-bold text-purple-600">
+                ${friend.owedAmount.toFixed(2)}
+              </p>
             </div>
           </div>
         ))}
       </div>
       <button
-        onClick={sendBillNotification} disabled={!isXmtpConnected || !isSplitCalculated}
+        onClick={sendBillNotification}
+        disabled={!isXmtpConnected || !isSplitCalculated}
         className="w-full px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 disabled:bg-gray-400 transition shadow-md"
       >
         Send Bill via XMTP 📱
