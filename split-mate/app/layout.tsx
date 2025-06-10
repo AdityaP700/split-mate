@@ -4,7 +4,6 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { AmountProvider } from "./context/AmountContext";
 import {XMTPProvider} from "./context/XMTPContext";
-import BillNotificationListener from './service/BillNotificationListener';
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
   description:
@@ -20,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-background dark">
         <Providers>
-          <AmountProvider><XMTPProvider><BillNotificationListener />{children}</XMTPProvider></AmountProvider>
+          <AmountProvider><XMTPProvider>{children}</XMTPProvider></AmountProvider>
         </Providers>
       </body>
     </html>
