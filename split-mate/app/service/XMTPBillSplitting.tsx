@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { useXMTP } from "../context/XMTPContext";
 import { useAccount } from "wagmi";
+import { ToastContainer, toast } from "react-toastify";
 
 type Friend = {
   id: number;
@@ -45,6 +46,10 @@ const XMTPBillSplitting = () => {
   const calculateSplit = () => {
     const numericAmount = parseFloat(totalAmount);
     if (!numericAmount || numericAmount <= 0 || friends.length === 0) {
+      toast.warn("Please enter a valid total amount.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       alert("Please enter a valid total amount.");
       return;
     }
@@ -55,11 +60,22 @@ const XMTPBillSplitting = () => {
     }));
     setFriends(updatedFriends);
     setIsSplitCalculated(true);
+    toast.success(
+      `Split calculated! Each person owes $${splitAmount.toFixed(2)}`,
+      {
+        position: "top-right",
+        autoClose: 3000,
+      }
+    );
     alert(`Split calculated! Each person owes $${splitAmount.toFixed(2)}.`);
   };
 
   const sendBillNotification = async () => {
     if (!isXmtpConnected || !isSplitCalculated) {
+      toast.warn("Please connect to XMTP and calculate the split first.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       alert("Please connect to XMTP and calculate the split first.");
       return;
     }
@@ -70,6 +86,10 @@ const XMTPBillSplitting = () => {
           (addr) => addr && addr.toLowerCase() !== userAddress?.toLowerCase()
         );
       if (recipientAddresses.length === 0) {
+        toast.error("No valid recipient addresses to send notifications to.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         alert("No valid recipient addresses to send notifications to.");
         return;
       }
@@ -85,6 +105,13 @@ const XMTPBillSplitting = () => {
       };
       const message = JSON.stringify(messagePayload);
       await sendGroupMessage(recipientAddresses, message);
+      toast.success(
+        `Successfully sent bill requests to ${recipientAddresses.length} friends!`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
       alert(
         `Successfully sent bill requests to ${recipientAddresses.length} friends!`
       );
@@ -96,6 +123,7 @@ const XMTPBillSplitting = () => {
 
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
+      <ToastContainer />
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
         XMTP Bill Splitting
       </h2>

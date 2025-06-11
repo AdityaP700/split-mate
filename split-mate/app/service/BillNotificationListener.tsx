@@ -3,10 +3,11 @@
 
 import { useEffect } from "react";
 import { useXMTP } from "../context/XMTPContext";
+import { ToastContainer, toast } from "react-toastify";
 
 // This is where you might use a library to show pop-up notifications
 // For now, we will just use console.log and window.alert
-// import toast from 'react-hot-toast'; 
+// import toast from 'react-hot-toast';
 
 const BillNotificationListener = () => {
   const { client, isConnected } = useXMTP();
@@ -26,7 +27,10 @@ const BillNotificationListener = () => {
         if (message.senderAddress === client.address) {
           continue;
         }
-
+        toast.info(`New message from ${message.senderAddress}`, {
+          position: "top-right",
+          autoClose: 3000,
+        });
         console.log(`XMTP: New message received from ${message.senderAddress}`);
 
         // Try to parse the message content as JSON
@@ -39,30 +43,36 @@ const BillNotificationListener = () => {
 
             // This is where you would trigger a real UI notification
             // For our test, a simple alert is perfect!
-            const alertMessage = 
-`New Bill Request!
-From: ${message.senderAddress.slice(0,6)}...${message.senderAddress.slice(-4)}
+            const alertMessage = `New Bill Request!
+From: ${message.senderAddress.slice(0, 6)}...${message.senderAddress.slice(-4)}
 Description: ${payload.description}
 Your Share: $${payload.yourShare}
-Pay to: ${payload.payToAddress.slice(0,6)}...`;
+Pay to: ${payload.payToAddress.slice(0, 6)}...`;
 
             window.alert(alertMessage);
+
+            toast.success(alertMessage, {
+              position: "top-right",
+              autoClose: 3000,
+            });
             // toast.success(`New bill request: ${payload.description}`);
           }
         } catch (error) {
           // This just means the message wasn't a JSON object we care about.
           // It's safe to ignore.
-          console.log("   (Ignoring a non-JSON or non-SplitMate message)",error);
+          console.log(
+            "   (Ignoring a non-JSON or non-SplitMate message)",
+            error
+          );
         }
       }
     };
 
     listenForMessages();
-
   }, [client, isConnected]); // Re-run this effect if the client or connection status changes
 
   // This component doesn't render any visible HTML. It just runs in the background.
-  return null;
+  return <ToastContainer />;
 };
 
 export default BillNotificationListener;
