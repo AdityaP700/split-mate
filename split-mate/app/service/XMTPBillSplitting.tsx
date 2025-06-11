@@ -1,7 +1,7 @@
 // src/components/XMTPBillSplitting.tsx
 
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useXMTP } from "../context/XMTPContext";
 import { useAccount } from "wagmi";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,29 +19,50 @@ const XMTPBillSplitting = () => {
   const [billDescription, setBillDescription] = useState("");
   const [totalAmount, setTotalAmount] = useState<string>("");
   const [isSplitCalculated, setIsSplitCalculated] = useState(false);
+  const [friendName, setFriendName] = useState("");
+  const [showInput, setShowInput] = useState(false);
 
   const { sendGroupMessage, isConnected: isXmtpConnected } = useXMTP();
   const { address: userAddress } = useAccount();
+  const addFriend = (name: string) => {
+    if (!name.trim()) return;
+    setFriends((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: name.trim(),
+        address: "", // Placeholder, can be updated later
+        owedAmount: 0,
+        hasPaid: false,
+      },
+    ]);
+    setFriendName("");
+    setShowInput(false);
+  };
 
-  useEffect(() => {
-    const defaultFriends: Friend[] = [
-      {
-        id: 1,
-        name: "Alice",
-        address: process.env.NEXT_PUBLIC_ALICE_WALLET_ADDRESS || "",
-        owedAmount: 0,
-        hasPaid: false,
-      },
-      {
-        id: 2,
-        name: "Bob",
-        address: process.env.NEXT_PUBLIC_BOB_WALLET_ADDRESS || "",
-        owedAmount: 0,
-        hasPaid: false,
-      },
-    ];
-    setFriends(defaultFriends);
-  }, []);
+  const removeFriend = (id: number) => {
+    setFriends((prev) => prev.filter((f) => f.id !== id));
+  };
+
+  // useEffect(() => {
+  //   const defaultFriends: Friend[] = [
+  //     {
+  //       id: 1,
+  //       name: "Alice",
+  //       address: process.env.NEXT_PUBLIC_ALICE_WALLET_ADDRESS || "",
+  //       owedAmount: 0,
+  //       hasPaid: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Bob",
+  //       address: process.env.NEXT_PUBLIC_BOB_WALLET_ADDRESS || "",
+  //       owedAmount: 0,
+  //       hasPaid: false,
+  //     },
+  //   ];
+  //   setFriends(defaultFriends);
+  // }, []);
 
   const calculateSplit = () => {
     const numericAmount = parseFloat(totalAmount);
@@ -151,6 +172,9 @@ const XMTPBillSplitting = () => {
             }}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 text-black"
           />
+          <span className="text-gray-700 font-semibold">
+            Total: ${parseFloat(totalAmount || "0").toFixed(2)}
+          </span>
           <button
             onClick={calculateSplit}
             disabled={!totalAmount || parseFloat(totalAmount) <= 0}
@@ -160,7 +184,59 @@ const XMTPBillSplitting = () => {
           </button>
         </div>
       </div>
-      <div className="space-y-3 mb-6">
+      <button
+        className="mb-2 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700"
+        onClick={() => setShowInput(true)}
+      >
+        Add Friend
+      </button>
+      {showInput && (
+        <div className="flex items-center mt-2 gap-2">
+          <input
+            type="text"
+            placeholder="Friend's name"
+            value={friendName}
+            onChange={(e) => setFriendName(e.target.value)}
+            className="px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          />
+          <button
+            onClick={() => addFriend(friendName)}
+            className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Add
+          </button>
+          <button
+            onClick={() => {
+              setShowInput(false);
+              setFriendName("");
+            }}
+            className="px-3 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
+      {friends.map((friend) => (
+        <div
+          key={friend.id}
+          className="flex items-center bg-gray-100 rounded-lg px-4 py-2 shadow-sm"
+        >
+          <span className="font-medium text-gray-800 mr-2">{friend.name}</span>
+          <span className="ml-auto text-gray-700 font-semibold">
+            ${friend.owedAmount.toFixed(2)}
+          </span>
+          <button
+            onClick={() => removeFriend(friend.id)}
+            className="ml-3 text-red-500 hover:text-red-700 text-xs"
+            title="Remove"
+          >
+            ✕
+          </button>
+        </div>
+      ))}
+
+      {/* <div className="space-y-3 mb-6">
         {friends.map((friend) => (
           <div
             key={friend.id}
@@ -175,7 +251,7 @@ const XMTPBillSplitting = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <button
         onClick={sendBillNotification}
         disabled={!isXmtpConnected || !isSplitCalculated}

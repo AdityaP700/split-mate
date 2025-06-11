@@ -25,9 +25,7 @@ const SplitBill = () => {
   const { amount } = useAmount();
   const [isOpen, setIsOpen] = useState(false);
   const [splitType, setSplitType] = useState<SplitType>("equal");
-  const [friends, setFriends] = useState<Friend[]>([
-    { id: 0, name: "You", billDetails: [] },
-  ]);
+  const [friends, setFriends] = useState<Friend[]>([]);
 
   const [showInput, setShowInput] = useState(false);
   const [friendName, setFriendName] = useState("");
