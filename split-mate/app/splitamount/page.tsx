@@ -2,15 +2,18 @@
 import XMTPBillSplitting from "@/app/service/XMTPBillSplitting";
 import BillDashboard from "../service/BillDashboard";
 import { useAccount } from "wagmi";
+import Link from "next/link";
 
 const SplitAmount = () => {
   const { address, isConnected } = useAccount();
   return (
     <div>
       <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 shadow backdrop-blur-md bg-white/80 dark:bg-gray-900/80">
-        <h1 className="text-3xl font-extrabold text-blue-600 dark:text-blue-300 tracking-tight">
-          SplitMate
-        </h1>
+        <Link href="/" className="flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold text-blue-600 dark:text-blue-300 tracking-tight">
+            SplitMate
+          </h1>
+        </Link>
         <h1 className="text-xl font-bold text-blue-600 dark:text-white tracking-tight">
           {isConnected && address
             ? `${address.slice(0, 6)}...${address.slice(-4)}`
