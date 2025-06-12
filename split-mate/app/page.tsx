@@ -18,12 +18,22 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAccount } from "wagmi";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 export default function App() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
+
   useEffect(() => {
     if (isConnected && address) {
+      axios
+        .post("/api", { address })
+        .then((res) => {
+          console.log("Response from API:", res.data);
+        })
+        .catch((err) => {
+          console.log("Error posting data:", err);
+        });
       toast.success("Wallet Connected Successfully", {
         position: "top-right",
         autoClose: 3000,
