@@ -2,7 +2,8 @@
 import dbConnect from "../../../lib/models/mongodb";
 import Profile from "../../../lib/models/Profile";
 
-export async function GET(request: Request, { params }: { params: { address: string } }) {
+export async function GET(request: Request, props: { params: Promise<{ address: string }> }) {
+  const params = await props.params;
   try {
     await dbConnect();
     const profile = await Profile.findOne({ walletAddress: params.address });
@@ -19,5 +20,4 @@ export async function GET(request: Request, { params }: { params: { address: str
     { status: 500 }
   );
 }
-
 }

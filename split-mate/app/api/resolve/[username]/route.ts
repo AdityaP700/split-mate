@@ -2,10 +2,8 @@
 import dbConnect from "../../../lib/models/mongodb";
 import Profile from "../../../lib/models/Profile";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { username: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ username: string }> }) {
+  const params = await props.params;
   try {
     const username = params.username.toLowerCase();
     await dbConnect();
@@ -29,6 +27,4 @@ export async function GET(
     { status: 500 }
   );
 }
-
-
 }
