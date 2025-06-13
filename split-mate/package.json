@@ -16,7 +16,7 @@
     "@xmtp/xmtp-js": "^11.6.3",
     "axios": "^1.9.0",
     "ethers": "^5.8.0",
-    "mongoose": "^8.15.1",
+    "mongoose": "^8.15.2",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",

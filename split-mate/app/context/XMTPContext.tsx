@@ -8,8 +8,10 @@ type XMTPContextType = {
   client: Client | null;
   isConnected: boolean;
   initializeXMTP: () => Promise<void>;
+  isInitializing: boolean;
   sendMessage: (recipientAddress: string, message: string) => Promise<void>;
   sendGroupMessage: (addresses: string[], message: string) => Promise<void>;
+  initError: string | null;
 };
 
 const XMTPContext = createContext<XMTPContextType | undefined>(undefined);
@@ -18,27 +20,34 @@ export const XMTPProvider = ({ children }: { children: ReactNode }) => {
   const [client, setClient] = useState<Client | null>(null);
   const { address, isConnected: isWalletConnected } = useAccount();
   const { data: walletClient } = useWalletClient();
+  const [isConnected, setIsConnected] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(false);
+  const [lastWalletAddress, setLastWalletAddress] = useState<string | null>(null);
   const isXmtpConnected = !!client;
-
+  const [initError, setInitError] = useState<string | null>(null);
+  
   const initializeXMTP = async () => {
-    if (!walletClient || !address) {
-      console.error("Wallet not connected");
-      return;
-    }
-
+    if (!walletClient || !address || isInitializing) return;
+    setIsInitializing(true);
+    setInitError(null);
     try {
-      console.log("Initializing XMTP client...");
+      if (client && lastWalletAddress === address) return; // Already initialized for this wallet
       const signer = walletClientToSigner(walletClient);
-      
-      // 2. Pass the signer to Client.create
       const xmtpClient = await Client.create(signer, {
         env: (process.env.NEXT_PUBLIC_XMTP_ENV as "dev" | "production") || "dev",
       });
       setClient(xmtpClient);
+      setIsConnected(true);
+      setLastWalletAddress(address);
+      setInitError(null);
       console.log("XMTP client initialized successfully!", xmtpClient.address);
-    } catch (error) {
-      console.error("Failed to initialize XMTP client:", error);
+    } catch (error: any) {
       setClient(null);
+      setIsConnected(false);
+      setInitError(error?.message || "Failed to initialize XMTP client");
+      console.error("Failed to initialize XMTP client:", error);
+    } finally {
+      setIsInitializing(false);
     }
   };
 
@@ -94,30 +103,41 @@ export const XMTPProvider = ({ children }: { children: ReactNode }) => {
     return results;
   };
 
-   useEffect(() => {
-    if (isWalletConnected && walletClient && !client) {
+  useEffect(() => {
+    if (isWalletConnected && walletClient) {
+      initializeXMTP();
+    } else if (!isWalletConnected && client) {
+      setClient(null);
+      setIsConnected(false);
+      setLastWalletAddress(null);
+    }
+    // Re-initialize if wallet address changes
+    if (lastWalletAddress && address && lastWalletAddress !== address) {
+      setClient(null);
+      setIsConnected(false);
+      setLastWalletAddress(null);
       initializeXMTP();
     }
-    if (!isWalletConnected && client) {
-      setClient(null);
-    }
-  }, [isWalletConnected, walletClient, client]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWalletConnected, walletClient, address]);
 
-   return (
+  return (
     <XMTPContext.Provider
       value={{
         client,
-        isConnected: isXmtpConnected,
+        isConnected,
+        isXmtpConnected,
         initializeXMTP,
         sendMessage,
         sendGroupMessage,
+        isInitializing,
+        initError,  
       }}
     >
       {children}
     </XMTPContext.Provider>
   );
 };
-
 
 export const useXMTP = () => {
   const context = useContext(XMTPContext);
