@@ -1,12 +1,11 @@
 # 🚀 SplitMate
 
-**SplitMate** is an AI-powered bill-splitting agent that seamlessly calculates and facilitates equal expense sharing in group chats — complete with instant **crypto payments** via the **Base blockchain**. Integrated with **XMTP messaging**, **Coinbase Wallet**, and built on **Next.js**, SplitMate automates the end-to-end process of fair payment distribution.
+**SplitMate** is a bill-splitting app that seamlessly calculates and facilitates equal expense sharing in group chats — complete with instant **crypto payments** via the **Base blockchain**. Integrated with **XMTP messaging**, **Coinbase Wallet**, and built on **Next.js**, 
 
 ---
 
 ## ✨ Features
 
-- 🤖 **AI Agent** for automatic split calculations
 - 👥 Group chat-aware context using **XMTP**
 - ⚡ Instant crypto payments on **Base Blockchain**
 - 🔐 Secure authentication via **Coinbase Wallet**
