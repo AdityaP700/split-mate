@@ -98,3 +98,7 @@ Pull requests are welcome. For major changes, please open an issue to discuss th
 4. **Push to the branch: git push origin feature/feature-name**
 
 5. **Open a Pull Request**
+
+### Team
+- Aditya Pattanayak (Full stack developer): Handled XMTP Messaging, integrating split function with XMTP part as well as other functionalities.
+- Vidip Ghosh (Full stack developer): Integrating coinbase wallet, developing frontend of the pages.
