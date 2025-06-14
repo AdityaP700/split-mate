@@ -52,30 +52,35 @@ const SplitAmountPage = () => {
   // Main Render Logic
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 shadow backdrop-blur-md bg-white/80 dark:bg-gray-900/80">
-        <Link href="/" className="group flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-            <span className="text-white font-bold text-lg">S</span>
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow">
+        <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
+          {/* Logo */}
+          <Link href="/" className="group flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+              <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <h1 className="text-3xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight">
+              SplitMate
+            </h1>
+          </Link>
+
+          {/* Address and Button */}
+          <div className="flex items-center gap-4">
+            {address && (
+              <>
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-semibold text-green-700 dark:text-green-400">
+                  {`${address.slice(0, 6)}...${address.slice(-4)}`}
+                </span>
+              </>
+            )}
+            <button
+              onClick={handleDisconnect}
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+            >
+              Disconnect
+            </button>
           </div>
-          <h1 className="text-3xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight">
-            SplitMate
-          </h1>
-        </Link>
-        <div className="flex items-center gap-4">
-          {address && (
-            <>
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-semibold text-green-700 dark:text-green-400">
-                {`${address.slice(0, 6)}...${address.slice(-4)}`}
-              </span>
-            </>
-          )}
-          <button
-            onClick={handleDisconnect}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
-          >
-            Disconnect
-          </button>
         </div>
       </header>
 

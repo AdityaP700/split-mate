@@ -50,6 +50,7 @@ Your Share: $${payload.yourShare}
 Pay to: ${payload.payToAddress.slice(0, 6)}...`;
 
             window.alert(alertMessage);
+            alert(alertMessage);
 
             toast.success(alertMessage, {
               position: "top-right",
