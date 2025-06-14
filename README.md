@@ -1,6 +1,6 @@
 # 🚀 SplitMate
 
-**SplitMate** is a bill-splitting app that seamlessly calculates and facilitates equal expense sharing in group chats — complete with instant **crypto payments** via the **Base blockchain**. Integrated with **XMTP messaging**, **Coinbase Wallet**, and built on **Next.js**, 
+**SplitMate** is a bill-splitting app that seamlessly calculates and facilitates equal expense sharing in group chats — complete with instant **crypto payments** via the **Base blockchain**. Integrated with **XMTP messaging**, **Coinbase Wallet**, and built on **Next.js**.
 
 ---
 
