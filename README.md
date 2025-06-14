@@ -1,105 +1,100 @@
+# 🚀 SplitMate
 
-# Connectly: AI-Powered LinkedIn Cold DM Automation
-
-Automate personalized LinkedIn outreach at scale using browser automation and advanced AI agents.
-
----
-
-##  Project Overview
-
-Connectly is designed to automate the repetitive process of cold messaging HR professionals on LinkedIn. By combining robust browser automation (Playwright) with state-of-the-art AI agents (from [Shubham Saboo’s awesome-llm-apps repo](https://github.com/Shubhamsaboo/awesome-llm-apps)), we enable batch, context-aware, and human-like outreach—saving time and boosting your response rates.
+**SplitMate** is a bill-splitting app that seamlessly calculates and facilitates equal expense sharing in group chats — complete with instant **crypto payments** via the **Base blockchain**. Integrated with **XMTP messaging**, **Coinbase Wallet**, and built on **Next.js**.
 
 ---
 
-##  Why This Approach?
+## ✨ Features
 
-- **Manual outreach is slow and unscalable.**
-- Existing tools are either too generic or get flagged by LinkedIn.
-- We want to combine the best of automation (for scale) and AI (for personalization).
-
-**Our intuition:**  
-Start with a powerful backend that handles all the heavy lifting (scraping, research, message generation, reply management). Once stable, layer a Chrome extension on top for instant, interactive UX.
-
----
-
-##  Tech Stack
-
-| Component      | Technology Used                              | Purpose                                 |
-|----------------|----------------------------------------------|-----------------------------------------|
-| Automation     | Playwright (Node.js/Python)                  | Automate LinkedIn login, navigation, scraping, and messaging |
-| AI Agents      | LLM apps from Shubham’s repo (RAG, Lead Gen, Meeting Agent) | Summarize company info, generate personalized messages, classify replies |
-| Backend        | Node.js, Express, BullMQ                     | Orchestrate scraping, queue jobs, API endpoints |
-| Database       | Supabase / SQLite                            | Store leads, message history, statuses  |
-| Extension (future) | Chrome Extension (Manifest V3, JS/TS)    | Human-in-the-loop validation, instant messaging UI |
-| DevOps         | Docker, GitHub Actions                       | Easy deployment and CI/CD               |
+- 👥 Group chat-aware context using **XMTP**
+- ⚡ Instant crypto payments on **Base Blockchain**
+- 🔐 Secure authentication via **Coinbase Wallet**
+- 🧮 Equally divides shared expenses
+- 💬 Friendly UI for message-based interaction
+- 🌐 Fully client-side rendered with **Next.js**
 
 ---
 
-##  Workflow
+## 🛠 Tech Stack
 
-1. **Login & Profile Fetching**
-   - Playwright automates LinkedIn login and navigates to HR profiles.
-2. **Company Research**
-   - Scrape company overview and profile details.
-   - Use RAG/AI agents to summarize key points and tailor outreach.
-3. **Personalized Message Generation**
-   - AI agent crafts a short, context-aware DM referencing both the company and your background.
-4. **Batch Messaging**
-   - Backend queues up multiple targets and sends messages with human-like delays.
-5. **Reply Handling**
-   - AI agent classifies replies (interested, not interested, follow-up needed) and suggests responses.
-6. **(Planned) Extension Layer**
-   - Chrome extension for instant, on-page message generation and sending.
+| Tech/Tool         | Usage                         |
+|------------------|-------------------------------|
+| **Next.js**       | Frontend & Routing            |
+| **XMTP**          | Messaging & Group Context     |
+| **Base Blockchain** | Transaction layer (L2)     |
+| **Coinbase Wallet** | Wallet connection (onchain) |
+| **Ethers.js**     | Blockchain interactions       |
+| **Tailwind CSS**  | Styling & responsive design   |
 
 ---
 
-##  Repo Structure
+## 🔧 How It Works
 
-```
-/Connectly
-├── backend/          # Playwright scripts, AI agent integration, API
-├── extension/        # (Planned) Chrome extension UI
-├── docs/             # Workflow diagrams, setup guides
-└── README.md
+1. **Connect Wallet:** Users connect using their Coinbase Wallet.
+2. **Join/Initiate Group Chat:** Messaging is handled via XMTP.
+3. **Enter Total Amount:** The user inputs the total bill amount.
+4. **Auto Split:** The app evenly divides the amount among participants.
+5. **Instant Pay:** Each participant pays their share via Base crypto transaction.
+6. **Confirmation:** Receipts are sent back via the chat.
+
+---
+
+## 📦 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/splitmate.git
+cd splitmate
 ```
 
----
+### 2. Install dependencies
+```bash
+npm install
+```
 
-## Key Features
+### 3. Create .env.local
+Create a .env.local file at the root:
+```bash
+NODE_ENV=development
+NEXT_RUNTIME="nodejs"
 
-- Batch scraping and messaging for LinkedIn
-- AI-powered, personalized message generation (not just templates!)
-- Company research and summary using Retrieval Augmented Generation (RAG)
-- Smart reply classification and suggested follow-ups
-- Modular: backend-first, with extension planned for seamless UX
+NEXT_EXPERIMENTAL_COMPILE_TIME_RS=true
+NEXT_EXPERIMENTAL_AMP_METRICS=true
+NEXT_SKIP_REWRITE_PREFETCH=false
 
----
+NEXT_PUBLIC_DEV_MODE=true
+NEXT_DEV_HTTPS=true
+NEXT_TELEMETRY_DISABLED=1
 
-##  Roadmap
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your_project_id_here
+NEXT_PUBLIC_BASE_GOERLI_RPC_URL=https://goerli.base.org
 
-- [x] Backend MVP: scraping, AI message gen, batch send
-- [ ] Reply classification and analytics
-- [ ] Chrome extension for instant messaging
-- [ ] Multi-channel support (Twitter, Email)
-- [ ] Crypto-native messaging (XMTP, Base)
+NEXT_PUBLIC_XMTP_ENV=production
+NEXT_PUBLIC_XMTP_API_KEY=your_xmtp_api_key
 
----
+NEXT_WEBPACK_DISABLE_CACHE=true
+NEXT_SHARP_PATH=./node_modules/sharp
+NEXT_DISABLE_SENTRY=true
+```
 
-##  Ethical Automation
+### 4. Run the development server
+```bash
+npm run dev
+```
 
-- Randomized delays and human-like actions to reduce detection risk
-- Daily send limits and opt-in data handling
-- No credential storage; session cookies only
+### 🧾 Example Use Case
+**A group of 4 friends go out to dinner. One of them enters the bill total on SplitMate. The app calculates everyone's share, and with a single message and click, it requests and confirms crypto payments from each member instantly.**
 
----
+### 🤝 Contributing
+Pull requests are welcome. For major changes, please open an issue to discuss the proposed changes first.
 
-##  Credits
+1. **Fork the repository**
 
-- [Playwright](https://playwright.dev/) for robust browser automation
-- [Awesome LLM Apps by Shubham Saboo](https://github.com/Shubhamsaboo/awesome-llm-apps) for modular AI agent inspiration and code
-- Community tutorials and open-source best practices
+2. **Create your feature branch: git checkout -b feature/feature-name**
 
----
+3. **Commit your changes: git commit -m 'Add feature'**
 
-> This project is for educational purposes. Always comply with LinkedIn's terms of service.
+4. **Push to the branch: git push origin feature/feature-name**
 
+5. **Open a Pull Request**
