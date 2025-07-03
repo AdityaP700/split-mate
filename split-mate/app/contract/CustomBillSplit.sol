@@ -5,14 +5,19 @@ contract CustomBillSplit {
     uint256 public totalAmount;
     address public admin;
 
-    mapping(address => bool) public user;
-    address[] public members;
+    mapping(address => bool) public isMember;
+    address[] private members;
     mapping(address => uint256) public owedAmount;
-    event DebugTotal(uint256 calculated, uint256 expected);
+
+    event MemberAdded(address member);
+    event TotalAmountSet(uint256 amount);
+    event BillSplit(uint256 totalSplit, uint256 expectedTotal);
+
     constructor() {
         admin = msg.sender;
-        user[msg.sender] = true;
+        isMember[msg.sender] = true;
         members.push(msg.sender);
+        emit MemberAdded(msg.sender);
     }
 
     modifier onlyAdmin() {
@@ -21,24 +26,48 @@ contract CustomBillSplit {
     }
 
     function addMember(address _member) public onlyAdmin {
-        require(!user[_member], "User is already a member");
-        user[_member] = true;
+        require(_member != address(0), "Invalid address");
+        require(!isMember[_member], "User already a member");
+
+        isMember[_member] = true;
         members.push(_member);
+        emit MemberAdded(_member);
     }
 
     function setTotalAmount(uint256 _amount) public onlyAdmin {
+        require(_amount > 0, "Amount must be positive");
         totalAmount = _amount;
+        emit TotalAmountSet(_amount);
     }
 
     function split(uint256[] calldata amounts) public onlyAdmin {
-        require(amounts.length == members.length, "Amounts and members mismatch");
-        uint256 total = 0;
+        uint256 len = members.length;
+        require(amounts.length == len, "Amounts and members mismatch");
 
-        for (uint256 i = 0; i < amounts.length; i++) {
+        uint256 totalSplit = 0;
+
+        for (uint256 i = 0; i < len; i++) {
             owedAmount[members[i]] = amounts[i];
-            total += amounts[i];
+            totalSplit += amounts[i];
         }
-        emit DebugTotal(total, totalAmount);
-        require(total == totalAmount, "Total doesn't match splits");
+
+        emit BillSplit(totalSplit, totalAmount);
+        require(totalSplit == totalAmount, "Total doesn't match splits");
+    }
+
+    function getMembers() external view returns (address[] memory) {
+        return members;
+    }
+
+    function getOwedAmount(address _member) external view returns (uint256) {
+        require(isMember[_member], "Not a member");
+        return owedAmount[_member];
+    }
+
+    function resetOwedAmounts() public onlyAdmin {
+        uint256 len = members.length;
+        for (uint256 i = 0; i < len; i++) {
+            owedAmount[members[i]] = 0;
+        }
     }
 }

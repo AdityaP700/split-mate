@@ -12,6 +12,12 @@ const nextConfig = {
       hostname: 'media.istockphoto.com',
       pathname: '**',
     },
+    {
+      protocol: 'https',
+      hostname: 'api.dicebear.com',
+      port: '',
+      pathname: '**',
+    },
   ],
 },
 
