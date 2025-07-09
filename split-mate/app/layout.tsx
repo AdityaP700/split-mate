@@ -1,14 +1,28 @@
+// app/layout.tsx
+
 import "@coinbase/onchainkit/styles.css";
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from "next/font/google"; // Or your preferred font
+import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { AmountProvider } from "./context/AmountContext";
-import { XMTPProvider } from "./context/XMTPContext";
+import dynamic from "next/dynamic";
+
+// --- CHANGE 1: Dynamically import our NEW, SAFE wrapper component ---
+const XmtpProviderWrapper = dynamic(
+  () => import('@/app/context/XMTPProviderClient'), // IMPORTANT: Point to the new file
+  { 
+    ssr: false,
+    loading: () => <div className="min-h-screen bg-[#030815]"></div> 
+  }
+);
+
 export const metadata: Metadata = {
   title: "SplitMate - The Future of Social Payments",
   description: "Split expenses instantly with friends using crypto. SplitMate integrates with your group chats to facilitate secure payments on the Base blockchain via XMTP.",
 };
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -16,11 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-background dark">
+    <html lang="en" className="dark">
+      <body className={inter.className}>
         <Providers>
           <AmountProvider>
-            <XMTPProvider>{children}</XMTPProvider>
+            {/* --- CHANGE 2: Use the wrapper component here --- */}
+            <XmtpProviderWrapper>
+              {children}
+            </XmtpProviderWrapper>
           </AmountProvider>
         </Providers>
       </body>
