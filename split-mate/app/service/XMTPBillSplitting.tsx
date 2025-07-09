@@ -25,6 +25,9 @@ const XMTPBillSplitting = () => {
   const [friendInput, setFriendInput] = useState("");
   const [showInput, setShowInput] = useState(false);
 
+  const [aiDescription, setAiDescription] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
   const {
     sendGroupMessage,
     isConnected: isXmtpConnected,
@@ -213,6 +216,41 @@ const XMTPBillSplitting = () => {
   }, []);
   */
 
+  // Add this after your existing handler functions
+  const handleAiAnalysis = async () => {
+    if (!aiDescription) {
+      toast.warn("Please describe the bill first");
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const res = await axios.post("/api/calculate-total", {
+        billDescription: aiDescription,
+      });
+
+      setTotalAmount(String(res.data.totalAmount));
+      setBillDescription(aiDescription); // Automatically set the bill description
+      setIsSplitCalculated(false); // Reset split calculation
+
+      toast.success(`AI calculated the total to be $${res.data.totalAmount}`, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error("AI Analysis error:", error);
+      toast.error(
+        "AI couldn't understand the bill. Please enter the total manually.",
+        {
+          position: "top-right",
+          autoClose: 4000,
+        }
+      );
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
@@ -233,6 +271,7 @@ const XMTPBillSplitting = () => {
 
       {/* ✅ Bill Description Input */}
       <div className="mb-6 space-y-4">
+        {/* Regular Bill Input */}
         <input
           type="text"
           placeholder="Bill description (e.g., Dinner at Restaurant)"
@@ -241,7 +280,41 @@ const XMTPBillSplitting = () => {
           className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-purple-500 text-black dark:text-white bg-transparent"
         />
 
-        {/* ✅ Total Amount Input with Calculate Button */}
+        {/* AI Analysis Section */}
+        <div className="p-4 border-2 border-dashed border-purple-400/30 dark:border-purple-400/20 rounded-lg bg-purple-50/50 dark:bg-purple-900/10">
+          <h3 className="font-bold mb-2 text-purple-700 dark:text-purple-300 flex items-center gap-2">
+            <span>✨ AI Co-Pilot</span>
+            {isAnalyzing && (
+              <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+            )}
+          </h3>
+          <textarea
+            placeholder="Describe your bill here (e.g., 'Dinner for 3 people at Joe's Pizza with 2 large pizzas at $20 each and 3 sodas at $3 each')"
+            value={aiDescription}
+            onChange={(e) => setAiDescription(e.target.value)}
+            className="w-full p-3 border border-purple-200 dark:border-purple-700 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
+            rows={3}
+          />
+          <button
+            onClick={handleAiAnalysis}
+            disabled={isAnalyzing || !aiDescription}
+            className="mt-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white rounded-md transition-colors duration-200 flex items-center gap-2"
+          >
+            {isAnalyzing ? (
+              <>
+                <span>Analyzing...</span>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              </>
+            ) : (
+              <>
+                <span>Calculate with AI</span>
+                <span>🤖</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Total Amount Input */}
         <div className="flex items-center gap-4">
           <input
             type="number"
@@ -249,7 +322,7 @@ const XMTPBillSplitting = () => {
             value={totalAmount}
             onChange={(e) => {
               setTotalAmount(e.target.value);
-              setIsSplitCalculated(false); // Reset calculation when amount changes
+              setIsSplitCalculated(false);
             }}
             className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-purple-500 text-black dark:text-white bg-transparent"
           />
@@ -258,11 +331,7 @@ const XMTPBillSplitting = () => {
           </span>
           <button
             onClick={calculateSplit}
-            disabled={
-              !totalAmount ||
-              parseFloat(totalAmount) <= 0 ||
-              friends.length === 0
-            }
+            disabled={!totalAmount || parseFloat(totalAmount) <= 0 || friends.length === 0}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 transition"
           >
             Calculate Split
