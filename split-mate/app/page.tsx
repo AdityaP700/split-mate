@@ -18,6 +18,7 @@ import { splitmateBentoData } from "@/components/sections/bento-data";
 import FaqCarousel from "@/components/sections/faq-carousel";
 import { faqData } from "@/components/sections/faq-data";
 import CtaCard from "@/components/sections/cta-card";
+import GridBackground from "@/components/sections/grid-background";
 
 // --- CHANGE 1: Import our new InteractiveFooter ---
 import InteractiveFooter from "@/components/sections/interactive-footer";
@@ -72,9 +73,10 @@ export default function App() {
       <ToastContainer position="top-right" autoClose={4000} newestOnTop closeOnClick theme="colored" className="mt-16" />
 
       <main className="flex flex-col items-center justify-center">
-        <div className="w-full space-y-24 md:space-y-32">
-          <HeroSection ctaButton={getStartedButton} />
-          <HowItWorks />
+        <div className="w-full space-y-20 md:space-y-28">
+            <HeroSection ctaButton={getStartedButton} />
+            
+                <HowItWorks />
           <section id="use-cases" className="w-full max-w-7xl mx-auto px-4">
             <div className="text-center"><h2 className="text-4xl md:text-5xl font-light tracking-tighter text-white">Powerful Features, Endless Possibilities</h2><p className="mt-4 max-w-2xl mx-auto text-lg text-white/60">From daily expenses to big group trips, SplitMate handles it all with on-chain precision.</p></div>
             <div className="mt-16 grid gap-4">

@@ -38,10 +38,10 @@ export default function HowItWorks() {
   const brandColor = "#0553f3";
 
   return (
-    <section id="how-it-works" className="w-full py-24 sm:py-32 bg-[#030815] relative">
+    <section id="how-it-works" className="w-full py-24 sm:py-15 bg-[#030815] relative">
        {/* Subtle background glow */}
        <div
-        className="absolute inset-x-0 top-0 h-1/2 w-full"
+        className="absolute inset-x-0 top-0 h-1/4 w-full"
         style={{
           background: `radial-gradient(circle at 50% 0%, rgba(5, 83, 243, 0.1) 0%, rgba(3, 8, 21, 0) 40%)`,
         }}
