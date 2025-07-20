@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "overrides": {
+  "ffi-napi": "npm:noop3"
+}
+
+,
   "dependencies": {
     "@coinbase/onchainkit": "^0.1.0",
     "@google/generative-ai": "^0.24.1",
