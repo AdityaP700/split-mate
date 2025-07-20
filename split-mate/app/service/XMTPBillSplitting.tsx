@@ -13,7 +13,24 @@ type Friend = {
   owedAmount: number;
   hasPaid: boolean;
 };
+const sendBillNotification = async()=>{
+  const billId = Date.now().toString();
+  const participant = friends.map(f=>({
+    address : f.address,
+    username: f.name,
+    owedAmount = f.owedAmount,
+    hasPaid:false
+  }));
 
+  await axios.post('/api/bills/create',{
+    billId,
+    creatorAddress:userAddress,
+    creatorUsername: "@yourUsername",
+    description:billDescription,
+    totalAmount : parseFloat(totalAmount),
+    participants,
+  })
+}
 // This is the new, clean component with smart friend addition
 const XMTPBillSplitting = () => {
   const [friends, setFriends] = useState<Friend[]>([]);

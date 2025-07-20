@@ -13,6 +13,13 @@ type BillRequest = {
   yourShare: number;
   payToAddress: `0x${string}`; // Use viem's address type
   paymentChainId: number;
+  bills : Bill[];
+};
+type Bill = {
+  sender: string;
+  amount: number;
+  description?: string;
+  dueDate?: string;
 };
 
 const BillDashboard = () => {
