@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dialog"
 
 // --- CHANGE 2: Import your existing XMTP component ---
-import XMTPBillSplitting from '@/app/service/XMTPBillSplitting'; // Adjust path if needed
+import XMTPBillSplitting from '@/components/XMTPBill'; // Adjust path if needed
 type NetworkUser = {
   id: string;
   name: string;
@@ -37,7 +37,7 @@ export default function MyNetwork({ network }: { network: NetworkUser[] }) {
   // --- CHANGE 3: Add state to control the dialog's visibility ---
   const [isSplitModalOpen, setIsSplitModalOpen] = useState(false);
 
-  const filteredNetwork = network.filter(
+ const filteredNetwork = (network ?? []).filter(
   (user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.address.toLowerCase().includes(searchTerm.toLowerCase())
@@ -108,32 +108,39 @@ export default function MyNetwork({ network }: { network: NetworkUser[] }) {
             <div className="col-span-3">Last Interaction</div>
             <div className="col-span-2 text-right">Actions</div>
           </div>
+         <div>
+  {filteredNetwork.length === 0 ? (
+    <div className="text-white/60 text-center py-4">No matching users found.</div>
+  ) : (
+    filteredNetwork.map((user) => (
+      <div key={user.id} className="grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 last:border-b-0 hover:bg-white/5 transition-colors">
+        <div className="col-span-4 flex items-center gap-4">
+          <Image src={user.avatar} alt={user.name} width={40} height={40} className="rounded-full" />
           <div>
-            {filteredNetwork.map((user) => (
-              <div key={user.id} className="grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 last:border-b-0 hover:bg-white/5 transition-colors">
-                <div className="col-span-4 flex items-center gap-4">
-                  <Image src={user.avatar} alt={user.name} width={40} height={40} className="rounded-full" />
-                  <div>
-                    <p className="font-medium text-white">{user.name}</p>
-                    <p className="text-xs text-white/50 font-mono">{user.address}</p>
-                  </div>
-                </div>
-                <div className="col-span-3">
-                  <div className="flex items-center gap-2">
-                    <user.icon className={`w-4 h-4 ${ user.isPositive === true ? 'text-green-400' : user.isPositive === false ? 'text-red-400' : 'text-white/50' }`} />
-                    <div>
-                      <p className="text-sm font-medium text-white/90">{user.status}</p>
-                      {user.isPositive !== null && <p className="text-xs text-white/60">{user.amount}</p>}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-span-3 text-sm text-white/70">{user.lastInteraction}</div>
-                <div className="col-span-2 text-right">
-                  <Button variant="ghost" size="sm" className="text-white/70 hover:bg-white/10 hover:text-white">View History</Button>
-                </div>
-              </div>
-            ))}
+            <p className="font-medium text-white">{user.name}</p>
+            <p className="text-xs text-white/50 font-mono">{user.address}</p>
           </div>
+        </div>
+        <div className="col-span-3">
+          <div className="flex items-center gap-2">
+            <user.icon className={`w-4 h-4 ${user.isPositive === true ? 'text-green-400' : user.isPositive === false ? 'text-red-400' : 'text-white/50'}`} />
+            <div>
+              <p className="text-sm font-medium text-white/90">{user.status}</p>
+              {user.isPositive !== null && <p className="text-xs text-white/60">{user.amount}</p>}
+            </div>
+          </div>
+        </div>
+        <div className="col-span-3 text-sm text-white/70">{user.lastInteraction}</div>
+        <div className="col-span-2 text-right">
+          <Button variant="ghost" size="sm" className="text-white/70 hover:bg-white/10 hover:text-white">
+            View History
+          </Button>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
         </div>
       </CardContent>
     </Card>
