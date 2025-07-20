@@ -13,24 +13,7 @@ type Friend = {
   owedAmount: number;
   hasPaid: boolean;
 };
-const sendBillNotification = async()=>{
-  const billId = Date.now().toString();
-  const participant = friends.map(f=>({
-    address : f.address,
-    username: f.name,
-    owedAmount = f.owedAmount,
-    hasPaid:false
-  }));
 
-  await axios.post('/api/bills/create',{
-    billId,
-    creatorAddress:userAddress,
-    creatorUsername: "@yourUsername",
-    description:billDescription,
-    totalAmount : parseFloat(totalAmount),
-    participants,
-  })
-}
 // This is the new, clean component with smart friend addition
 const XMTPBillSplitting = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -38,7 +21,6 @@ const XMTPBillSplitting = () => {
   const [totalAmount, setTotalAmount] = useState<string>("");
   const [isSplitCalculated, setIsSplitCalculated] = useState(false);
 
-  // ✅ NEW STATE: Replaced old friendName with smart friendInput
   const [friendInput, setFriendInput] = useState("");
   const [showInput, setShowInput] = useState(false);
 
@@ -151,64 +133,6 @@ const XMTPBillSplitting = () => {
       `Split calculated! Each person owes $${splitAmount.toFixed(2)}`
     );
   };
-
-  const sendBillNotification = async () => {
-    if (!isXmtpConnected || !isSplitCalculated) {
-      toast.warn("Please connect to XMTP and calculate the split first.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      return;
-    }
-
-    try {
-      // ✅ IMPROVED: Now works correctly because friends have proper addresses
-      const recipientAddresses = friends
-        .map((f) => f.address)
-        .filter(
-          (addr) => addr && addr.toLowerCase() !== userAddress?.toLowerCase()
-        );
-
-      if (recipientAddresses.length === 0) {
-        toast.error("No valid recipient addresses to send notifications to.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        return;
-      }
-
-      // ✅ DEMO: Message payload structure
-      const messagePayload = {
-        type: "splitmate_bill_request",
-        version: "1.0",
-        description: billDescription || "Group Expense",
-        totalAmount: parseFloat(totalAmount),
-        yourShare: friends[0]?.owedAmount || 0,
-        currency: "USD",
-        payToAddress: userAddress,
-        paymentChainId: 84531, // Base Sepolia Testnet
-        // ✅ DEMO: Additional fields you might want to include
-        // timestamp: new Date().toISOString(),
-        // billId: `bill_${Date.now()}`,
-        // dueDate: "2024-12-31",
-      };
-
-      const message = JSON.stringify(messagePayload);
-      await sendGroupMessage(recipientAddresses, message);
-
-      toast.success(
-        `Successfully sent bill requests to ${recipientAddresses.length} friends!`,
-        {
-          position: "top-right",
-          autoClose: 3000,
-        }
-      );
-    } catch (error) {
-      console.error("Failed to send notifications:", error);
-      toast.error("An error occurred while sending notifications.");
-    }
-  };
-
   // ✅ DEMO: Optional - Load demo friends for testing
   // Uncomment this useEffect to add demo friends automatically
   /*
@@ -267,7 +191,60 @@ const XMTPBillSplitting = () => {
       setIsAnalyzing(false);
     }
   };
+ const sendBillNotification = async () => {
+    try {
+      const billId = Date.now().toString();
 
+      const participants = friends.map(f => ({
+          address: f.address,
+          username: f.name,
+          owedAmount: f.owedAmount,
+          hasPaid: false
+      }));
+
+      await axios.post('/api/bills/create', {
+          billId,
+          creatorAddress: userAddress,
+          creatorUsername: "@yourUsername", // TODO: Get this from profile state
+          description: billDescription,
+          totalAmount: parseFloat(totalAmount),
+          participants,
+      });
+      toast.info("Bill saved to your dashboard...");
+
+      const messages = friends.map(friend => {
+          if (!friend.address || friend.address.toLowerCase() === userAddress?.toLowerCase()) {
+              return null;
+          }
+
+          const messagePayload = {
+              type: "splitmate_bill_request",
+              version: "1.0",
+              billId: billId,
+              description: billDescription || "Group Expense",
+              totalAmount: parseFloat(totalAmount),
+              yourShare: friend.owedAmount, 
+              payToAddress: userAddress,
+          };
+
+          return {
+              address: friend.address,
+              message: JSON.stringify(messagePayload)
+          };
+      }).filter(Boolean); 
+
+      for (const msg of messages) {
+          if (msg) {
+              await sendGroupMessage([msg.address], msg.message);
+          }
+      }
+
+      toast.success(`Bill requests sent to ${messages.length} friends!`);
+    } catch (error) {
+      console.error("Failed to create or send bill:", error);
+      toast.error("An error occurred. Please try again.");
+    }
+  };
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
