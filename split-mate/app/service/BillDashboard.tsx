@@ -11,6 +11,7 @@ import axios from "axios";
 type Bill = {
   billId: string;
   creatorUsername: string;
+  creatorAddress: string;
   description: string;
   participants: {
     address: string;
@@ -42,37 +43,45 @@ const BillDashboard = ({ bills, fetchDashboardData }: { bills: Bill[], fetchDash
     setProcessingBillId(bill.billId); // Remember which bill is being paid
     
     sendTransaction({
-      to: bill.creatorAddress, // Pay the person who created the bill
-      value: parseEther(String(currentUserParticipant.owedAmount)), // Pay your specific share
-    });
+  to: bill.creatorAddress as `0x${string}`,
+  value: parseEther(String(currentUserParticipant.owedAmount)),
+});
+
   };
 
   // --- THE "WOW" MOMENT ---
   // This effect runs after a successful payment transaction
   useEffect(() => {
-    if (isSuccess && hash && processingBillId) {
-      console.log("Payment successful! Sending confirmation receipt...");
-      toast.success("Payment sent! Notifying your friend...");
+  if (isSuccess && hash && processingBillId) {
+    console.log("Payment successful! Sending confirmation receipt...");
+    toast.success("Payment sent! Notifying your friend...");
 
-      const confirmationPayload = {
-        type: 'payment_confirmation',
-        billId: processingBillId,
-        payerAddress: address,
-      };
+    const confirmationPayload = {
+      type: 'payment_confirmation',
+      billId: processingBillId,
+      payerAddress: address,
+    };
 
-      // Find the bill to get the creator's address to send the receipt to
-      const paidBill = bills.find(b => b.billId === processingBillId);
-      if (paidBill) {
-        // 1. Send the XMTP receipt
-        sendMessage(paidBill.creatorAddress, JSON.stringify(confirmationPayload));
+    const paidBill = bills.find(b => b.billId === processingBillId);
+    if (paidBill) {
+      // 1. Send receipt via XMTP
+      sendMessage(paidBill.creatorAddress, JSON.stringify(confirmationPayload));
 
-        // 2. Update the database
-        axios.post('/api/bills/settle', { billId: processingBillId, payerAddress: address });
-      }
-
-      setProcessingBillId(null); // Reset processing state
+      // 2. Update DB and then refresh dashboard
+      axios
+        .post('/api/bills/settle', { billId: processingBillId, payerAddress: address })
+        .then(() => {
+          fetchDashboardData(); // 🔄 refresh UI after successful update
+        })
+        .catch(err => {
+          console.error("Failed to settle bill in DB:", err);
+          toast.error("Database update failed, but transaction went through.");
+        });
     }
-  }, [isSuccess, hash]);
+
+    setProcessingBillId(null);
+  }
+}, [isSuccess, hash]);
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-6">
