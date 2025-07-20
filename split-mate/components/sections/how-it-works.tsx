@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MessageSquare, ListChecks, ArrowRight, Zap } from "lucide-react";
+import { Variants } from "framer-motion";
 
 const steps = [
   {
@@ -21,19 +22,18 @@ const steps = [
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
       delay: i * 0.2,
-      duration: 0.6,
-      ease: "easeOut",
+      duration: 0.5,
+      ease: [0.42, 0, 0.58, 1], // ✅ cubic-bezier for easeInOut
     },
   }),
 };
-
 export default function HowItWorks() {
   const brandColor = "#0553f3";
 
@@ -65,16 +65,16 @@ export default function HowItWorks() {
         </motion.div>
 
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 items-start">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.title}
-              className="flex flex-col items-center text-center"
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }}
-            >
+  {steps.map((step, i) => (
+    <motion.div
+      key={step.title}
+      className="flex flex-col items-center text-center"
+      custom={i}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.5 }}
+    >
                 <div className="relative flex items-center justify-center">
                     <div className="relative flex h-16 w-16 items-center justify-center rounded-full border-2 border-white/10 bg-white/5 backdrop-blur-sm">
                         <step.icon className="h-8 w-8 text-white" style={{color: brandColor}} />

@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import BillDashboard from "@/app/service/BillDashboard";
-import XMTPBillSplitting from "@/app/service/XMTPBillSplitting";
+import XMTPBillSplitting from "./XMTPBill";
 import MyNetwork from "@/components/sections/my-network";
 import History from "@/components/history"; // assuming you have this
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,6 +39,18 @@ export default function DashboardLayout() {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // ✅ Define this outside useEffect so it can be reused
+  const fetchDashboardData = async () => {
+    try {
+      const res = await axios.get(`/api/dashboard/${address}`);
+      setDashboardData(res.data);
+    } catch (err) {
+      console.error("Failed to fetch dashboard data", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // --- Fetch Profile Info ---
   useEffect(() => {
     if (!address) return;
@@ -50,18 +62,7 @@ export default function DashboardLayout() {
 
   // --- Fetch Dashboard Info ---
   useEffect(() => {
-    if (!address) return;
-    const fetchDashboardData = async () => {
-      try {
-        const res = await axios.get(`/api/dashboard/${address}`);
-        setDashboardData(res.data);
-      } catch (err) {
-        console.error("Failed to fetch dashboard data", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchDashboardData();
+    if (address) fetchDashboardData();
   }, [address]);
 
   const brandColor = "#0553f3";
@@ -73,7 +74,6 @@ export default function DashboardLayout() {
       </div>
     );
   }
-
   if (!dashboardData) {
     return (
       <div className="min-h-screen bg-[#030815] text-white flex items-center justify-center">
@@ -216,7 +216,10 @@ export default function DashboardLayout() {
                 </Card>
               ))}
             </div>
-            <BillDashboard bills={dashboardData.incomingBills} />
+<BillDashboard
+  bills={dashboardData.incomingBills}
+  fetchDashboardData={fetchDashboardData}
+/>
           </motion.div>
         )}
 

@@ -51,11 +51,11 @@ export default function GridBackground({
 
   return (
     <motion.div
-      ref={containerRef}
-      style={{ opacity, scale }}
-      className={`relative w-full flex items-center justify-center -my-32 overflow-hidden ${className}`}
-      style={{ height }}
-    >
+  ref={containerRef}
+  style={{ opacity, scale, height }} // ✅ only one `style` prop
+  className={`relative w-full flex items-center justify-center -my-32 overflow-hidden ${className}`}
+>
+
       {/* Main spotlight effect */}
       <motion.div
         className="absolute inset-0 w-full h-full"

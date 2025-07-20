@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, X } from 'lucide-react';
 import Image from 'next/image';
-import { networkData } from './my-network-data'; // Your mock data
 
 // --- CHANGE 1: Import the Dialog components from shadcn/ui ---
 import {
@@ -21,18 +20,29 @@ import {
 
 // --- CHANGE 2: Import your existing XMTP component ---
 import XMTPBillSplitting from '@/app/service/XMTPBillSplitting'; // Adjust path if needed
-
-export default function MyNetwork() {
+type NetworkUser = {
+  id: string;
+  name: string;
+  address: string;
+  avatar: string;
+  icon: React.ComponentType<{ className?: string }>;
+  status: string;
+  isPositive: boolean | null;
+  amount?: string;
+  lastInteraction: string;
+};
+export default function MyNetwork({ network }: { network: NetworkUser[] }) {
   const [searchTerm, setSearchTerm] = useState('');
   
   // --- CHANGE 3: Add state to control the dialog's visibility ---
   const [isSplitModalOpen, setIsSplitModalOpen] = useState(false);
 
-  const filteredNetwork = networkData.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.address.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredNetwork = network.filter(
+  (user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.address.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
   return (
     // The main Card wrapper remains the same
