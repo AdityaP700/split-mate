@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { faqData } from "./faq-data"; // Assuming your faq-data is here
 
 interface FaqItem {
   id: number;
