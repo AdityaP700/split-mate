@@ -7,12 +7,17 @@ import { walletClientToSigner } from "../lib/ethers-adapter";
 type XMTPContextType = {
   client: Client | null;
   isConnected: boolean;
+  isXmtpConnected: boolean;
   initializeXMTP: () => Promise<void>;
   isInitializing: boolean;
-  sendMessage: (recipientAddress: string, message: string) => Promise<void>;
-  sendGroupMessage: (addresses: string[], message: string) => Promise<void>;
+  sendMessage: (recipientAddress: string, message: string) => Promise<boolean>;
+  sendGroupMessage: (
+    addresses: string[],
+    message: string
+  ) => Promise<PromiseSettledResult<boolean>[]>;
   initError: string | null;
 };
+
 
 const XMTPContext = createContext<XMTPContextType | undefined>(undefined);
 

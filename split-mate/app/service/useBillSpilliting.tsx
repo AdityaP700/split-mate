@@ -12,6 +12,9 @@ export type Friend = {
   owedAmount: number;
   hasPaid: boolean;
 };
+type AnalyzeBillResponse = {
+  split: Friend[];
+};
 
 export const useBillSplitting = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -91,25 +94,45 @@ export const useBillSplitting = () => {
     toast.success(`Split calculated! Each person owes $${splitAmount.toFixed(2)}`);
   };
 
-  const handleAiAnalysis = async () => {
-    if (!aiDescription) {
-      toast.warn("Please describe the bill first");
-      return;
-    }
-    setIsAnalyzing(true);
-    try {
-      const res = await axios.post("/api/calculate-total", { billDescription: aiDescription });
-      setTotalAmount(String(res.data.totalAmount));
-      setBillDescription(aiDescription);
-      setIsSplitCalculated(false);
-      toast.success(`AI calculated the total to be $${res.data.totalAmount}`);
-    } catch (error) {
-      console.error("AI Analysis error:", error);
-      toast.error("AI couldn't understand the bill. Please enter the total manually.");
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
+ const handleAiAnalysis = async () => {
+  if (!aiDescription) {
+    toast.warn("Please describe the bill in the Co-Pilot textarea.");
+    return;
+  }
+  if (friends.length === 0) {
+    toast.warn("Please add the friends involved before using the AI.");
+    return;
+  }
+
+  setIsAnalyzing(true);
+  try {
+    const response = await axios.post<AnalyzeBillResponse>("/api/analyze-bill", {
+      billDescription: aiDescription,
+      friends, // Send the current list of friends for context
+    });
+
+    // ✅ rename to avoid shadowing and add a type
+    const calculatedSplit: Friend[] = response.data.split;
+
+    // ✅ either inference will now work, or be explicit with <number>
+    const newTotalAmount = calculatedSplit.reduce<number>(
+      (sum, friend) => sum + friend.owedAmount,
+      0
+    );
+
+    setFriends(calculatedSplit);
+    setTotalAmount(String(newTotalAmount));
+    setBillDescription(aiDescription);
+    setIsSplitCalculated(true);
+
+    toast.success("AI has successfully analyzed and split the bill!");
+  } catch (error) {
+    console.error("AI Analysis error:", error);
+    toast.error("AI couldn't understand the bill. Please try a different description.");
+  } finally {
+    setIsAnalyzing(false);
+  }
+};
 
   const sendBillNotification = async () => {
     try {
