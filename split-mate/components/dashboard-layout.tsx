@@ -173,7 +173,10 @@ export default function DashboardLayout() {
 
       {/* --- Main Content --- */}
       <main className="pl-64 p-8">
-        <header className="mb-10">
+        {/* --- Tab 0: Dashboard --- */}
+        {activeTab === 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <header className="mb-10">
           <h2 className="text-3xl font-bold mb-1">
             Welcome back{username ? `, @${username}` : ""}!
           </h2>
@@ -181,10 +184,6 @@ export default function DashboardLayout() {
             Here's your on-chain financial overview.
           </p>
         </header>
-
-        {/* --- Tab 0: Dashboard --- */}
-        {activeTab === 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {statCards.map((stat, index) => (
                 <Card
