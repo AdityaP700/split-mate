@@ -1,18 +1,63 @@
-// /app/api/calculate-total/route.ts
-
+// /app/api/analyze-bill/route.ts
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+// Ensure the API key is available in your environment
+if (!process.env.GOOGLE_API_KEY) {
+  throw new Error("GOOGLE_API_KEY is not defined.");
+}
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
 export async function POST(request: Request) {
-  console.log("--- [AI ANALYSIS MOCKED] ---");
-  console.log("Returning a hardcoded successful response for the demo.");
+  try {
+    // This API now accepts the RAW text and the list of friends
+    const { billDescription, friends } = await request.json();
 
-  // Simulate a short delay to make it look real
-  await new Promise(resolve => setTimeout(resolve, 1000));
+    // --- THIS IS THE CRITICAL PROMPT ENGINEERING ---
+    // We give the AI a role, context, instructions, and the desired output format.
+    const prompt = `
+      You are an expert bill splitting AI agent for an app called SplitMate.
+      Your task is to analyze a complex, natural language bill description and calculate a fair and accurate split among the friends provided.
 
-  // The successful JSON response the AI would normally give
-  const mockedResponse = {
-    totalAmount: 123.45 
-  };
+      CONTEXT:
+      - The list of friends involved is: ${JSON.stringify(friends)}. Their names and addresses are the ground truth.
+      - The person using the app is the one who paid the total bill.
 
-  return new Response(JSON.stringify(mockedResponse), { status: 200 });
+      BILL DESCRIPTION TO ANALYZE:
+      "${billDescription}"
+
+      YOUR INSTRUCTIONS:
+      1. Read the bill description carefully to understand all items, shared costs, individual costs, and any pre-payments or deposits.
+      2. Calculate the final "owedAmount" for each person. This is the amount they need to pay back to the person who paid the bill.
+      3. The final output MUST be a clean JSON object.
+      4. The JSON object must contain one key: "split".
+      5. The value of "split" must be an array of friend objects, perfectly matching the structure of the friends list I provided.
+      6. For each friend in your response array, you MUST use the exact same "id", "name", and "address" that I provided.
+      7. You MUST update the "owedAmount" for each friend based on your calculations.
+      8. "hasPaid" should always be false
+      9. The sum of all "owedAmount" values in your response should equal the total expense.
+
+      EXAMPLE OUTPUT FORMAT:
+      {
+        "split": [
+          { "id": 1, "name": "@alice", "address": "0x...", "owedAmount": 25.50, "hasPaid": false },
+          { "id": 2, "name": "@bob", "address": "0x...", "owedAmount": 42.00, "hasPaid": false }
+        ]
+      }
+
+      Now, analyze the bill and provide ONLY the JSON object as your response.
+    `;
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" }); // Use a powerful model
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+
+    // Clean the response from the AI to ensure it's valid JSON
+    const jsonResponse = JSON.parse(responseText.replace(/```json/g, "").replace(/```/g, ""));
+
+    // Send the structured data back to the frontend
+    return new Response(JSON.stringify(jsonResponse), { status: 200 });
+
+  } catch (error) {
+    console.error("AI analysis failed:", error);
+    return new Response(JSON.stringify({ error: "Failed to analyze bill" }), { status: 500 });
+  }
 }
