@@ -1,9 +1,9 @@
-// /app/service/useBillSplitting.ts
 import { useState } from "react";
 import { useXMTP } from "../context/XMTPContext";
 import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export type Friend = {
   id: number;
@@ -12,6 +12,7 @@ export type Friend = {
   owedAmount: number;
   hasPaid: boolean;
 };
+
 type AnalyzeBillResponse = {
   split: Friend[];
 };
@@ -26,9 +27,14 @@ export const useBillSplitting = () => {
   const [aiDescription, setAiDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
+  // --- NEW STATE FROM UPDATED CODE ---
+  const [isCreatingBill, setIsCreatingBill] = useState(false);
+
   const { sendGroupMessage, isConnected: isXmtpConnected, isInitializing } = useXMTP();
   const { address: userAddress } = useAccount();
+  const router = useRouter();
 
+  // ---------------- ADD FRIEND ----------------
   const handleAddFriend = async () => {
     if (!friendInput.trim()) return;
     const input = friendInput.trim().toLowerCase();
@@ -67,11 +73,13 @@ export const useBillSplitting = () => {
     }
   };
 
+  // ---------------- REMOVE FRIEND ----------------
   const removeFriend = (id: number) => {
     setFriends((prev) => prev.filter((f) => f.id !== id));
     setIsSplitCalculated(false);
   };
 
+  // ---------------- CALCULATE SPLIT ----------------
   const calculateSplit = () => {
     const numericAmount = parseFloat(totalAmount);
     if (!numericAmount || numericAmount <= 0) {
@@ -94,47 +102,52 @@ export const useBillSplitting = () => {
     toast.success(`Split calculated! Each person owes $${splitAmount.toFixed(2)}`);
   };
 
- const handleAiAnalysis = async () => {
-  if (!aiDescription) {
-    toast.warn("Please describe the bill in the Co-Pilot textarea.");
-    return;
-  }
-  if (friends.length === 0) {
-    toast.warn("Please add the friends involved before using the AI.");
-    return;
-  }
+  // ---------------- AI ANALYSIS ----------------
+  const handleAiAnalysis = async () => {
+    if (!aiDescription) {
+      toast.warn("Please describe the bill in the Co-Pilot textarea.");
+      return;
+    }
+    if (friends.length === 0) {
+      toast.warn("Please add the friends involved before using the AI.");
+      return;
+    }
 
-  setIsAnalyzing(true);
-  try {
-    const response = await axios.post<AnalyzeBillResponse>("/api/analyze-bill", {
-      billDescription: aiDescription,
-      friends, // Send the current list of friends for context
-    });
+    setIsAnalyzing(true);
+    try {
+      const response = await axios.post<AnalyzeBillResponse>("/api/analyze-bill", {
+        billDescription: aiDescription,
+        friends,
+      });
 
-    // ✅ rename to avoid shadowing and add a type
-    const calculatedSplit: Friend[] = response.data.split;
+      const calculatedSplit: Friend[] = response.data.split;
+      const newTotalAmount = calculatedSplit.reduce<number>(
+        (sum, friend) => sum + friend.owedAmount,
+        0
+      );
 
-    // ✅ either inference will now work, or be explicit with <number>
-    const newTotalAmount = calculatedSplit.reduce<number>(
-      (sum, friend) => sum + friend.owedAmount,
-      0
-    );
+      setFriends(calculatedSplit);
+      setTotalAmount(String(newTotalAmount));
+      setBillDescription(aiDescription);
+      setIsSplitCalculated(true);
 
-    setFriends(calculatedSplit);
-    setTotalAmount(String(newTotalAmount));
-    setBillDescription(aiDescription);
-    setIsSplitCalculated(true);
+      toast.success("AI has successfully analyzed and split the bill!");
+    } catch (error) {
+      console.error("AI Analysis error:", error);
+      toast.error("AI couldn't understand the bill. Please try a different description.");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
-    toast.success("AI has successfully analyzed and split the bill!");
-  } catch (error) {
-    console.error("AI Analysis error:", error);
-    toast.error("AI couldn't understand the bill. Please try a different description.");
-  } finally {
-    setIsAnalyzing(false);
-  }
-};
-
+  // ---------------- SEND BILL NOTIFICATION ----------------
   const sendBillNotification = async () => {
+    if (!isSplitCalculated || friends.length === 0) {
+      toast.warn("Please add friends and calculate the split first.");
+      return;
+    }
+
+    setIsCreatingBill(true); // NEW LOADING STATE
     try {
       const billId = Date.now().toString();
       const participants = friends.map((f) => ({
@@ -144,6 +157,7 @@ export const useBillSplitting = () => {
         hasPaid: false,
       }));
 
+      // Save the bill
       await axios.post("/api/bills/create", {
         billId,
         creatorAddress: userAddress,
@@ -152,8 +166,18 @@ export const useBillSplitting = () => {
         totalAmount: parseFloat(totalAmount),
         participants,
       });
-      toast.info("Bill saved to your dashboard...");
+      toast.info("✅ Bill saved to your records...");
 
+      // Update the network
+      for (const friend of friends) {
+        await axios.post("/api/network/add", {
+          userAddress: userAddress,
+          friendAddress: friend.address,
+        });
+      }
+      toast.info("✅ Network updated...");
+
+      // Prepare XMTP messages
       const messages = friends
         .map((friend) => {
           if (!friend.address || friend.address.toLowerCase() === userAddress?.toLowerCase()) {
@@ -174,13 +198,23 @@ export const useBillSplitting = () => {
         })
         .filter(Boolean);
 
-      for (const msg of messages) {
-        if (msg) await sendGroupMessage([msg.address], msg.message);
+      if (messages.length > 0) {
+        await sendGroupMessage(
+          messages.map((m) => m!.address),
+          messages[0]!.message
+        );
+        toast.success(`🚀 Bill requests sent to ${messages.length} friends!`);
       }
-      toast.success(`Bill requests sent to ${messages.length} friends!`);
+
+      // Redirect
+      toast.info("Redirecting to your dashboard...");
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 2000);
     } catch (error) {
       console.error("Failed to create or send bill:", error);
       toast.error("An error occurred. Please try again.");
+      setIsCreatingBill(false);
     }
   };
 
@@ -198,6 +232,7 @@ export const useBillSplitting = () => {
     aiDescription,
     setAiDescription,
     isAnalyzing,
+    isCreatingBill, // MERGED LOADING STATE
     isXmtpConnected,
     isInitializing,
     handleAddFriend,

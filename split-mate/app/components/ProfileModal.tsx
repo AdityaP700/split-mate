@@ -46,7 +46,7 @@ export default function ProfileModal({
       // Close modal after a delay
       setTimeout(() => {
         onClose();
-        router.push('/splitamount'); // <-- REDIRECT AFTER SUCCESS
+        router.push('/dashboard'); // <-- REDIRECT AFTER SUCCESS
         }, 2000);
     } catch (error: any) {
       setStep('form');

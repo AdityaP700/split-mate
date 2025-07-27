@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Send, Trash2, X, Users, Calculator, QrCode, Wallet } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import QRCode from "qrcode";
 import Image from "next/image";
 import { useAccount } from "wagmi";
@@ -25,6 +25,7 @@ const XMTPBillSplitting = () => {
     setTotalAmount,
     isSplitCalculated,
     friendInput,
+    isCreatingBill,
     setFriendInput,
     showInput,
     setShowInput,
@@ -42,7 +43,7 @@ const XMTPBillSplitting = () => {
 
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const { address: userAddress } = useAccount();
-
+  const router = useRouter();
   const generatePaymentQr = async () => {
     if (!userAddress) {
       toast.error("Please connect your wallet first.");
@@ -252,12 +253,11 @@ const XMTPBillSplitting = () => {
         <div className="space-y-2">
           <Button
             onClick={sendBillNotification}
-            disabled={!isXmtpConnected || !isSplitCalculated}
+            disabled={!isXmtpConnected || !isSplitCalculated || isCreatingBill}
             className="w-full bg-blue-600 hover:bg-blue-700 h-10"
           >
             <Send className="w-4 h-4 mr-2" />
-            Send Bill Notification
-          </Button>
+          {isCreatingBill ? "Processing & Sending..." : "Send Bill via XMTP 📱"}           </Button>
 
           {isSplitCalculated && (
             <Button

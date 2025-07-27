@@ -37,7 +37,22 @@ const BillSchema: Schema<IBill> = new Schema({
   status: { type: String, enum: ['pending', 'settled'], default: 'pending' },
   createdAt: { type: Date, default: Date.now },
 });
-
+// This can be in a shared types file, e.g., /app/lib/types.ts
+export type Bill = {
+  billId: string;
+  creatorAddress: string;
+  creatorUsername: string;
+  description: string;
+  totalAmount: number;
+  participants: {
+    address: string;
+    username: string;
+    owedAmount: number;
+    hasPaid: boolean;
+  }[];
+  status: 'pending' | 'settled';
+  createdAt: string; // Comes from DB as an ISO string
+};
 dbConnect();
 
 export default (mongoose.models.Bill as Model<IBill>) || mongoose.model<IBill>("Bill", BillSchema);

@@ -17,7 +17,11 @@ const profileSchema = new Schema({
         unique: true, // Usernames must be unique
         lowercase: true, // Store usernames in lowercase for easy lookup
         trim: true,
-    }
+    },
+    friends:[{
+          type: String,
+          lowercase:true,
+    }]
 });
 
 // Avoid recompiling the model

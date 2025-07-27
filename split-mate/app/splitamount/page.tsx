@@ -1,14 +1,13 @@
-// /app/splitamount/page.tsx
-
+// split-mate/app/splitamount/page.tsx
 "use client";
+
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useXMTP } from "../context/XMTPContext";
 import { useAccount, useDisconnect } from "wagmi";
-import DashboardLayout from "@/components/dashboard-layout";
 import { toast } from "react-toastify";
 
-const SplitAmountPage = () => {
+const HomePage = () => {
   const router = useRouter();
   const { address, isConnected: isWalletConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -28,6 +27,10 @@ const SplitAmountPage = () => {
     if (isWalletConnected && !isXmtpConnected && !isInitializing) {
       initializeXMTP();
     }
+    if (isWalletConnected && isXmtpConnected) {
+      // Redirect user to dashboard
+      router.push("/dashboard");
+    }
   }, [isWalletConnected, isXmtpConnected, isInitializing, initializeXMTP, router]);
 
   const handleDisconnect = () => {
@@ -35,7 +38,6 @@ const SplitAmountPage = () => {
     router.push("/");
   };
 
-  // Main Render Logic
   if (isInitializing) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
@@ -49,6 +51,7 @@ const SplitAmountPage = () => {
       </div>
     );
   }
+
   if (initError) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
@@ -74,7 +77,13 @@ const SplitAmountPage = () => {
       </div>
     );
   }
-  return <DashboardLayout />;
+
+  // While waiting for redirect, show a minimal loading state
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-center">
+      <p className="text-white/80">Redirecting to your dashboard...</p>
+    </div>
+  );
 };
 
-export default SplitAmountPage;
+export default HomePage;
