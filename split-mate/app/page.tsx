@@ -64,7 +64,7 @@ export default function App() {
     setShowProfileModal(false);
     toast.success("Profile created! Redirecting you to the app...");
     setTimeout(() => {
-      router.push("/splitamount");
+      router.push("/dashboard");
     }, 2000);
   };
 
@@ -110,7 +110,7 @@ export default function App() {
 
   const getStartedButton = isConnected ? (
     <button
-      onClick={() => router.push("/splitamount")}
+      onClick={() => router.push("/dashboard")}
       className="group flex items-center justify-center gap-2 rounded-full bg-[#0553f3] px-6 py-3 text-white transition-all hover:bg-[#0348d4] focus:outline-none"
     >
       <span className="text-sm font-medium">Launch Dashboard</span>
