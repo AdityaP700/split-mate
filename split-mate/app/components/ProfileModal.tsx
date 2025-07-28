@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // <-- ADD THIS LINE
+import { useRouter } from 'next/navigation'; 
 import { toast } from 'react-toastify';
 export default function ProfileModal({ 
   isOpen, 

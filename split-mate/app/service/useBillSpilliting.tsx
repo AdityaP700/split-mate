@@ -17,7 +17,7 @@ type AnalyzeBillResponse = {
   split: Friend[];
 };
 
-export const useBillSplitting = () => {
+export const useBillSplitting = ({ onBillCreated }: { onBillCreated: () => void }) => {
   const [friends, setFriends] = useState<Friend[]>([]);
   const [billDescription, setBillDescription] = useState("");
   const [totalAmount, setTotalAmount] = useState<string>("");
@@ -172,7 +172,7 @@ export const useBillSplitting = () => {
       for (const friend of friends) {
         await axios.post("/api/network/add", {
           userAddress: userAddress,
-          friendAddress: friend.address,
+          friendAddress: friend.address
         });
       }
       toast.info("✅ Network updated...");
@@ -208,9 +208,11 @@ export const useBillSplitting = () => {
 
       // Redirect
       toast.info("Redirecting to your dashboard...");
+      router.refresh();
       setTimeout(() => {
         router.push('/dashboard');
-      }, 2000);
+      }, 500);
+      onBillCreated?.();
     } catch (error) {
       console.error("Failed to create or send bill:", error);
       toast.error("An error occurred. Please try again.");

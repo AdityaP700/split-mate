@@ -15,12 +15,10 @@ import { calls } from "../utils/calls";
 
 export default function TransactionComponent() {
   const { address } = useAccount();
-  // console.log("TransactionComponent address", address);
-  // console.log("Chain ID:", process.env.NEXT_PUBLIC_CHAIN_ID);
+ 
   const handleOnStatus = useCallback((status: LifecycleStatus) => {
     console.log("LifecycleStatus", status);
   }, []);
-  // console.log("calls: ", calls);
 
   return address ? (
     <Transaction

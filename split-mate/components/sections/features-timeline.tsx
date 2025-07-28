@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, Zap } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { motion, AnimatePresence } from 'framer-motion'; // Import motion and AnimatePresence
+import { motion, AnimatePresence } from 'framer-motion'; 
 
 interface TimelineItem {
   id: number;

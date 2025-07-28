@@ -1,4 +1,4 @@
-import Split from "../../lib/models/Split";
+import Split from "@/app/lib/models/Split";
 
 export async function GET(req) {
   try {
@@ -8,7 +8,6 @@ export async function GET(req) {
     if (!user) {
       return new Response(JSON.stringify({ error: "Missing user address" }), { status: 400 });
     }
-    // Find all splits where user is creator or participant
     const splits = await Split.find({
       $or: [
         { creator: user },

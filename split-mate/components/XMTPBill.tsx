@@ -16,7 +16,10 @@ import Image from "next/image";
 import { useAccount } from "wagmi";
 import { toast } from "sonner";
 
-const XMTPBillSplitting = () => {
+interface XMTPBillSplittingProps {
+  onBillCreated: () => void;
+}
+const XMTPBillSplitting = ({ onBillCreated }: XMTPBillSplittingProps) => {
   const {
     friends,
     billDescription,
@@ -39,7 +42,7 @@ const XMTPBillSplitting = () => {
     calculateSplit,
     handleAiAnalysis,
     sendBillNotification,
-  } = useBillSplitting();
+  } = useBillSplitting({onBillCreated});
 
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const { address: userAddress } = useAccount();

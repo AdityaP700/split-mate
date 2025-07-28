@@ -9,13 +9,13 @@ const profileSchema = new Schema({
     walletAddress: {
         type: String,
         required: true,
-        unique: true, // A wallet can only have one profile
+        unique: true,
     },
     username: {
         type: String,
         required: true,
-        unique: true, // Usernames must be unique
-        lowercase: true, // Store usernames in lowercase for easy lookup
+        unique: true, 
+        lowercase: true,
         trim: true,
     },
     friends:[{
@@ -24,5 +24,4 @@ const profileSchema = new Schema({
     }]
 });
 
-// Avoid recompiling the model
 export default mongoose.models.Profile || mongoose.model("Profile", profileSchema);
