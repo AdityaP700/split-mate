@@ -13,7 +13,7 @@ export async function GET(request: Request, props: { params: Promise<{ address: 
     }
     return new Response(JSON.stringify(profile), { status: 200 });
   } catch (error) {
-  console.error("Server Error:", error); // This line uses `error`
+  console.error("Server Error:", error); 
 
   return new Response(
     JSON.stringify({ error: "Server error", details: error.message || String(error) }),

@@ -1,6 +1,5 @@
 import { User, TrendingUp, TrendingDown } from 'lucide-react';
 
-// A simple function to get a random avatar placeholder
 const getAvatarUrl = (seed: string) => `https://api.dicebear.com/8.x/initials/svg?seed=${seed}`;
 
 export const networkData = [

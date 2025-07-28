@@ -117,13 +117,13 @@ export default function History({ history }: { history: Bill[] }) {
                   transition={{ delay: index * 0.05 }}
                 >
                   <div className="col-span-5 flex items-center gap-3">
-                    <Image
-                      src={`https://api.dicebear.com/8.x/initials/svg?seed=${entry.creatorUsername}`}
-                      alt={entry.creatorUsername}
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
+  <Image
+    src={`https://api.dicebear.com/8.x/initials/png?seed=${entry.creatorUsername}`}
+    alt={entry.creatorUsername}
+    width={32}
+    height={32}
+    className="rounded-full"
+  />
                     <div>
                       <p className="font-medium text-white">{entry.description}</p>
                       <p className="text-xs text-white/50">

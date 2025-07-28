@@ -1,40 +1,65 @@
-import dbConnect from "../../lib/models/mongodb";
+// /app/api/dashboard/[address]/route.ts
+
+import { NextRequest } from "next/server";
+import dbConnect from "../../lib/models/mongodb"; 
 import Split from "../../lib/models/Split";
 import Network from "../../lib/models/Network";
+import Profile from "../../lib/models/Profile"; 
 
-export async function GET(req) {
+export async function GET(req: NextRequest, { params }: { params: { address: string } }) {
   try {
     await dbConnect();
-    const { searchParams } = new URL(req.url);
-    const user = searchParams.get("user");
-    if (!user) {
+    const userAddress = params.address.toLowerCase();
+
+    if (!userAddress) {
       return new Response(JSON.stringify({ error: "Missing user address" }), { status: 400 });
     }
 
-    // You Are Owed: sum of all splits where user is a participant and has not paid
-    const owedSplits = await Split.find({ "participants.address": user, "participants.hasPaid": false });
-    const youAreOwed = owedSplits.reduce((sum, split) => {
-      const p = split.participants.find(p => p.address === user);
-      return sum + (p && !p.hasPaid ? p.amount : 0);
-    }, 0);
+    const allUserSplits = await Split.find({
+      $or: [{ creator: userAddress }, { "participants.address": userAddress }],
+    }).sort({ createdAt: -1 });
 
-    // You Owe: sum of all splits where user is a participant and has not paid, but not the creator
-    const youOweSplits = await Split.find({ "participants.address": user, creator: { $ne: user }, "participants.hasPaid": false });
-    const youOwe = youOweSplits.reduce((sum, split) => {
-      const p = split.participants.find(p => p.address === user);
-      return sum + (p && !p.hasPaid ? p.amount : 0);
-    }, 0);
+    // --- CALCULATE DASHBOARD STATS ---
+    let youAreOwed = 0;
+    let youOwe = 0;
+    const incomingBills = []; 
+    const openBills = [];    
 
-    // Network Size
-    const network = await Network.findOne({ user });
-    const networkSize = network ? network.contacts.length : 0;
+    for (const split of allUserSplits) {
+      if (split.creator === userAddress) {
+        if (split.status === 'pending') openBills.push(split);
+        split.participants.forEach((p) => {
+          if (!p.hasPaid) {
+            youAreOwed += p.amount;
+          }
+        });
+      } else {
+        const myParticipantEntry = split.participants.find(p => p.address === userAddress);
+        if (myParticipantEntry && !myParticipantEntry.hasPaid) {
+          incomingBills.push(split);
+          youOwe += myParticipantEntry.amount;
+        }
+      }
+    }
 
-    return new Response(JSON.stringify({
+    
+    const userNetwork = await Network.findOne({ user: userAddress });
+    const friendAddresses = userNetwork?.friends.map(f => f.address) || [];
+    
+    const networkProfiles = await Profile.find({ walletAddress: { $in: friendAddresses } });
+
+    const responseData = {
       youAreOwed,
       youOwe,
-      networkSize,
-    }), { status: 200 });
+      networkSize: networkProfiles.length,
+      incomingBills,
+      openBills,
+      history: allUserSplits, 
+      network: networkProfiles, };
+
+    return new Response(JSON.stringify(responseData), { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    console.error("Dashboard API Error:", error);
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), { status: 500 });
   }
 }

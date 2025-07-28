@@ -3,8 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 
-// --- THIS IS THE CRITICAL FIX ---
-// Use the same, single source of truth for the Bill type.
+
 type Bill = {
   billId: string;
   creatorAddress: string;
@@ -42,12 +41,14 @@ export default function OpenBillsPanel({ bills }: { bills: Bill[] }) {
                     {bill.participants.map(p => (
                       <div key={p.address} title={`${p.username} - ${p.hasPaid ? 'Paid' : 'Pending'}`}>
                         <Image
-                          src={`https://api.dicebear.com/8.x/initials/svg?seed=${p.username}`}
-                          alt={p.username}
-                          width={28}
-                          height={28}
-                          className={`rounded-full border-2 transition-all ${p.hasPaid ? 'border-green-500' : 'border-gray-500 opacity-60'}`}
-                        />
+        src={`https://api.dicebear.com/8.x/initials/png?seed=${p.username}`}
+        alt={p.username}
+        width={28}
+        height={28}
+        className={`rounded-full border-2 transition-all ${
+          p.hasPaid ? 'border-green-500' : 'border-gray-500 opacity-60'
+        }`}
+      />
                       </div>
                     ))}
                   </div>

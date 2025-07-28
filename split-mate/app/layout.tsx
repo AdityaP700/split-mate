@@ -8,9 +8,8 @@ import { Providers } from "./providers";
 import { AmountProvider } from "./context/AmountContext";
 import dynamic from "next/dynamic";
 
-// --- CHANGE 1: Dynamically import our NEW, SAFE wrapper component ---
 const XmtpProviderWrapper = dynamic(
-  () => import('@/app/context/XMTPProviderClient'), // IMPORTANT: Point to the new file
+  () => import('@/app/context/XMTPProviderClient'), 
   { 
     ssr: false,
     loading: () => <div className="min-h-screen bg-[#030815]"></div> 

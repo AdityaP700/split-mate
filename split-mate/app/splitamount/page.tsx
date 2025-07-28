@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const HomePage = () => {
   const router = useRouter();
-  const { address, isConnected: isWalletConnected } = useAccount();
+  const { isConnected: isWalletConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const {
     isConnected: isXmtpConnected,

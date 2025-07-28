@@ -35,7 +35,7 @@ export default function DashboardOverview() {
     {
       title: "Network Size",
       amount: dashboardData.networkSize,
-      change: "+2",
+      change: `$${dashboardData.networkChange>=0? '+': ''}${dashboardData.networkChange}`,
       icon: Users,
       positive: true,
     },

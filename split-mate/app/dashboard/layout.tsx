@@ -16,10 +16,6 @@ import {
 } from "lucide-react";
 
 const brandColor = "#0553f3";
-
-// -----------------
-// Dashboard Context
-// -----------------
 interface DashboardContextType {
   dashboardData: any;
   username: string | null;
@@ -45,10 +41,6 @@ const TABS = [
   { label: "History", icon: HistoryIcon, href: "/dashboard/history" },
   { label: "Settings", icon: Settings, href: "/dashboard/settings" },
 ];
-
-// -----------------
-// DashboardLayout
-// -----------------
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();

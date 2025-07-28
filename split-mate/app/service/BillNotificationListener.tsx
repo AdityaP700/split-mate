@@ -5,10 +5,6 @@ import { useEffect } from "react";
 import { useXMTP } from "../context/XMTPContext";
 import { ToastContainer, toast } from "react-toastify";
 
-// This is where you might use a library to show pop-up notifications
-// For now, we will just use console.log and window.alert
-// import toast from 'react-hot-toast';
-
 const BillNotificationListener = () => {
   const { client, isConnected } = useXMTP();
 
@@ -33,16 +29,13 @@ const BillNotificationListener = () => {
         });
         console.log(`XMTP: New message received from ${message.senderAddress}`);
 
-        // Try to parse the message content as JSON
         try {
           const payload = JSON.parse(message.content);
 
-          // IMPORTANT: Check if it's a message our app understands
           if (payload.type === "splitmate_bill_request") {
             console.log("✅ It's a SplitMate bill request!", payload);
 
-            // This is where you would trigger a real UI notification
-            // For our test, a simple alert is perfect!
+            
             const alertMessage = `New Bill Request!
 From: ${message.senderAddress.slice(0, 6)}...${message.senderAddress.slice(-4)}
 Description: ${payload.description}
@@ -70,9 +63,7 @@ Pay to: ${payload.payToAddress.slice(0, 6)}...`;
     };
 
     listenForMessages();
-  }, [client, isConnected]); // Re-run this effect if the client or connection status changes
-
-  // This component doesn't render any visible HTML. It just runs in the background.
+  }, [client, isConnected]); 
   return <ToastContainer />;
 };
 
