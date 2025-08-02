@@ -1,4 +1,4 @@
-import genAI from "@/lib/GenAI";
+import genAI from "@/app/lib/models/GenAI";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
