@@ -49,7 +49,7 @@ export default function HeroSection({ ctaButton }: { ctaButton: React.ReactNode 
         <ContainerScroll titleComponent={TitleContent}>
             {/* The dashboard image is now the 'child' of the scroll container */}
             <Image
-                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+                src="/images/Dashboard.png"
                 alt="SplitMate Dashboard Preview"
                 height={720}
                 width={1400}

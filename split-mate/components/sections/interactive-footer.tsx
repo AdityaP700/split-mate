@@ -6,6 +6,7 @@ import { ChromeGrid } from "@/components/ui/chrome-grid";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAccount } from "wagmi";
+import { useState } from "react";
 
 const footerLinks = {
   Product: [
@@ -21,22 +22,24 @@ const footerLinks = {
 ],
 Company: [
   { name: "About Us", href: "/info" },
-  { name: "Contact", href: "/info" },
+  { name: "Contact", href: "/contact" },
   { name: "Brand", href: "/info" },
 ],
 };
 
-const socialLinks = [
-  { name: "GitHub", icon: Github, url: "https://github.com" },
-  { name: "Twitter", icon: X, url: "https://x.com" },
-  { name: "XMTP", icon: MessageSquare, url: "https://xmtp.org" },
+const collaborationLinks = [
+  { name: "Contribute on GitHub", icon: Github, url: "https://github.com/AdityaP700/split-mate" },
+  { name: "Report Issues", icon: MessageSquare, url: "https://github.com/AdityaP700/split-mate/issues" },
 ];
+
 
 export default function InteractiveFooter({
   onLinkClick,
 }: {
   onLinkClick?: (label: string) => void;
 }) {  const { isConnected } = useAccount();
+const [email, setEmail] = useState("");
+const [submitted, setSubmitted] = useState(false);
 
   const getStartedButton = isConnected ? (
     <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700 w-full sm:w-auto">
@@ -111,22 +114,66 @@ export default function InteractiveFooter({
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Input
-                type="email"
-                placeholder="example@gmail.com"
-                className="w-full bg-white/5 border-white/20 placeholder:text-white/40"
-              />
-              <Button className="w-full sm:w-auto bg-white text-black hover:bg-white/90">Join</Button>
+  <Input
+    type="email"
+    placeholder="example@gmail.com"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    className="w-full bg-white/5 border-white/20 placeholder:text-white/40"
+  />
+  <Button
+    className="w-full sm:w-auto bg-white text-black hover:bg-white/90"
+    onClick={() => {
+      if (email.trim() !== "") {
+        setSubmitted(true);
+        setEmail(""); // Optionally reset
+      }
+    }}
+  >
+    Join
+  </Button>
+</div>
+{submitted && (
+  <p className="text-sm text-green-400 mt-2">
+    🎉 You're in! Thanks for joining SplitMate.
+  </p>
+)}
+
+          </div>
+
+          {/* Open Source Collaboration */}
+          <div className="text-center mb-8">
+            <h4 className="text-lg font-semibold text-white mb-2">Open for Collaboration</h4>
+            <p className="text-sm text-white/60 mb-4">
+              SplitMate is open source. Join our community and help us build the future of social payments.
+            </p>
+            <div className="flex justify-center items-center gap-4">
+              {collaborationLinks.map((link) => {
+                const IconComponent = link.icon;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200 hover:scale-105 text-sm text-white/80 hover:text-white"
+                    title={link.name}
+                  >
+                    <IconComponent className="w-4 h-4" />
+                    {link.name}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
           {/* Footer bottom row */}
           <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-4 pt-8 border-t border-white/10 text-sm text-white/60">
             <p>© {new Date().getFullYear()} SplitMate. A MVP design.</p>
-            <div className="flex gap-6">
+            {/* <div className="flex gap-6">
               <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
               <Link href="/terms-of-service" className="hover:text-white">Terms of Service</Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

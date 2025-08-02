@@ -19,6 +19,9 @@ const XmtpProviderWrapper = dynamic(
 export const metadata: Metadata = {
   title: "SplitMate - The Future of Social Payments",
   description: "Split expenses instantly with friends using crypto. SplitMate integrates with your group chats to facilitate secure payments on the Base blockchain via XMTP.",
+  icons: {
+    icon: "/images/Splitmate-logo.png", // path relative to public/
+  },
 };
 
 const inter = Inter({ subsets: ["latin"] });
