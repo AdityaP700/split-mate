@@ -1,6 +1,6 @@
 // src/lib/ethers-adapters.ts
 
-import { type WalletClient } from '@wagmi/core'
+import type { WalletClient } from 'viem';
 import { providers } from 'ethers'
 import { type HttpTransport } from 'viem'
 
@@ -13,22 +13,26 @@ import { type HttpTransport } from 'viem'
 export function walletClientToSigner(walletClient: WalletClient): providers.JsonRpcSigner {
   const { account, chain, transport } = walletClient
 
-  // Build an ethers-compatible network object
+  // Ensure required fields are available
+  if (!chain) {
+    throw new Error("walletClient.chain is undefined. Ensure wallet is connected.");
+  }
+
+  if (!account) {
+    throw new Error("walletClient.account is undefined. Ensure wallet is connected.");
+  }
+
   const network: providers.Network = {
     chainId: chain.id,
     name: chain.name,
-    // ENS registry address (if available on chain config)
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
 
-  // Use the WalletClient's transport (which implements viem's HttpTransport)
   const provider = new providers.Web3Provider(
-    // viem HttpTransport is compatible with Web3Provider
     transport as unknown as providers.ExternalProvider,
     network
   )
 
-  // Return the Signer tied to the user's account address
   return provider.getSigner(account.address)
 }
 

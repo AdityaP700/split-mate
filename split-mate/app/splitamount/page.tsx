@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useXMTP } from "../context/XMTPContext";
 import { useAccount, useDisconnect } from "wagmi";
 import { toast } from "react-toastify";
+export const dynamic = "force-dynamic";
 
 const HomePage = () => {
   const router = useRouter();

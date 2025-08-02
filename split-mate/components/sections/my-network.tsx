@@ -33,6 +33,7 @@ type NetworkUser = {
   lastInteraction: string;
 };
 
+export const dynamic = "force-dynamic";
 
 // Helper to determine icon and color
 const getStatusAttributes = (status: string) => {

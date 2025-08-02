@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -40,16 +40,17 @@ export default function DashboardLayout() {
   const [isLoading, setIsLoading] = useState(true);
 
   // ✅ Define this outside useEffect so it can be reused
-  const fetchDashboardData = async () => {
-    try {
-      const res = await axios.get(`/api/dashboard/${address}`);
-      setDashboardData(res.data);
-    } catch (err) {
-      console.error("Failed to fetch dashboard data", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const fetchDashboardData = useCallback(async () => {
+  try {
+    const res = await axios.get(`/api/dashboard/${address}`);
+    setDashboardData(res.data);
+  } catch (err) {
+    console.error("Failed to fetch dashboard data", err);
+  } finally {
+    setIsLoading(false);
+  }
+}, [address]);
+
 
   // --- Fetch Profile Info ---
   useEffect(() => {
@@ -61,9 +62,10 @@ export default function DashboardLayout() {
   }, [address]);
 
   // --- Fetch Dashboard Info ---
-  useEffect(() => {
-    if (address) fetchDashboardData();
-  }, [address]);
+ useEffect(() => {
+  if (address) fetchDashboardData();
+}, [address, fetchDashboardData]);
+
 
   const brandColor = "#0553f3";
 
@@ -229,7 +231,7 @@ export default function DashboardLayout() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-xl p-8"
           >
-            <XMTPBillSplitting />
+            <XMTPBillSplitting onBillCreated={fetchDashboardData} />
           </motion.div>
         )}
 

@@ -79,7 +79,7 @@ const BillDashboard = ({ bills, fetchDashboardData }: { bills: Bill[], fetchDash
 
       setProcessingBillId(null); // Reset the processing state
     }
-  }, [isSuccess, hash]); // Dependencies are correct
+  }, [isSuccess, hash,address, bills, processingBillId, sendMessage, fetchDashboardData]); // Dependencies are correct
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-6">

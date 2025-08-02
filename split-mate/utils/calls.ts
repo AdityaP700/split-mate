@@ -69,7 +69,7 @@ const clickContractAbi = [
  
 export const calls = [
   {
-    address: clickContractAddress,
+    to: clickContractAddress as `0x${string}`, 
     abi: clickContractAbi,
     functionName: 'register',
     args: [],

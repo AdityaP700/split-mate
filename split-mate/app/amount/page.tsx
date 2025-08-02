@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { useAmount } from "../context/AmountContext";
 import { useRouter } from "next/navigation";
 
@@ -6,10 +7,11 @@ const Amount = () => {
   const { amount, setAmount } = useAmount();
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     router.push("/split");
   };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh]">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-sm">
