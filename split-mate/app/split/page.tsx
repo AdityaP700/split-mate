@@ -52,7 +52,7 @@ const SplitBill = () => {
     setFriends((prev) => prev.filter((f) => f.id !== id));
   };
   const totalPeople = friends.length + 1;
-  const amountPerPerson = (amount / totalPeople).toFixed(2);
+const amountPerPerson = ((amount ?? 0) / totalPeople).toFixed(2);
   const calculateBill = (
     friends: Friend[],
     billDetails: BillInput

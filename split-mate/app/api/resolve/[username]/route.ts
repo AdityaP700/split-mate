@@ -20,11 +20,14 @@ export async function GET(request: Request, props: { params: Promise<{ username:
       status: 200,
     });
   } catch (error) {
-  console.error("Server Error:", error); 
+  console.error("Server Error:", error);
+
+  const errorMessage =
+    error instanceof Error ? error.message : String(error);
 
   return new Response(
-    JSON.stringify({ error: "Server error", details: error.message || String(error) }),
+    JSON.stringify({ error: "Server error", details: errorMessage }),
     { status: 500 }
   );
 }
-}
+};

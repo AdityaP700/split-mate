@@ -19,7 +19,7 @@ export async function GET(request: Request, { params }: { params: { address: str
     ]);
 
     const friends = userNetwork?.friends || [];
-    const friendAddresses = friends.map(f => f.address);
+const friendAddresses = friends.map((f: { address: string }) => f.address);
     const networkProfiles = await Profile.find({ walletAddress: { $in: friendAddresses } });
 
     // STEP 2: Calculate the main dashboard stats (You Owe, You Are Owed, etc.)

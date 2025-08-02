@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { Mail, Github, Linkedin, X } from "lucide-react";
 
 export default function Contact() {
@@ -6,27 +7,39 @@ export default function Contact() {
     {
       name: "Aditya Pattanayak",
       role: "Full Stack Developer",
-      image: "/images/Aditya's.png", 
-      description: "Led UI/UX redesign, implemented XMTP messaging integration, managed database fetch operations, and built core functionalities including the split logic. Passionate about creating intuitive user experiences and robust backend systems.",
-      skills: ["React/Next.js", "UI/UX Design", "Database Management", "XMTP Integration"],
+      image: "/images/AdityaP.png",
+      description:
+        "Led UI/UX redesign, implemented XMTP messaging integration, managed database fetch operations, and built core functionalities including the split logic. Passionate about creating intuitive user experiences and robust backend systems.",
+      skills: [
+        "React/Next.js",
+        "UI/UX Design",
+        "Database Management",
+        "XMTP Integration",
+      ],
       social: {
-        github: "https://github.com/AdityaP700", 
+        github: "https://github.com/AdityaP700",
         linkedin: "https://www.linkedin.com/in/aditya-pattanayak-6b303b267/",
-        twitter: "https://x.com/AdityaPat_"
-      }
+        twitter: "https://x.com/AdityaPat_",
+      },
     },
     {
       name: "Vidip Ghosh",
       role: "Full Stack Developer",
-      image: "/images/Vidip.png", 
-      description: "Designed and deployed the smart contract, proposed the core idea, and implemented Coinbase Wallet integration and initial frontend development. Expert in blockchain technologies and smart contract development.",
-      skills: ["Smart Contracts", "Blockchain", "Coinbase Integration", "Frontend Development"],
+      image: "/images/Vidip.png",
+      description:
+        "Designed and deployed the smart contract, proposed the core idea, and implemented Coinbase Wallet integration and initial frontend development. Expert in blockchain technologies and smart contract development.",
+      skills: [
+        "Smart Contracts",
+        "Blockchain",
+        "Coinbase Integration",
+        "Frontend Development",
+      ],
       social: {
-        github: "https://github.com/ghoshvidip26", 
+        github: "https://github.com/ghoshvidip26",
         linkedin: "https://www.linkedin.com/in/ghoshvidip26/",
-        twitter: "https://x.com/ghoshvidip26"
-      }
-    }
+        twitter: "https://x.com/ghoshvidip26",
+      },
+    },
   ];
 
   return (
@@ -41,7 +54,7 @@ export default function Contact() {
         <h2 className="text-2xl font-semibold mb-8 text-[#00d4aa] text-center">
           Meet Our Savy Tech Team
         </h2>
-        
+
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {developers.map((dev, index) => (
             <div
@@ -50,16 +63,21 @@ export default function Contact() {
             >
               {/* Profile Image */}
               <div className="relative h-80 overflow-hidden">
-                <img
+                <Image
                   src={dev.image}
                   alt={dev.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                   onError={(e) => {
-                    e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(dev.name)}&size=320&background=random`;
+                    const target = e.target as HTMLImageElement;
+                    target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                      dev.name
+                    )}&size=320&background=random`;
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 {/* Floating Social Links */}
                 <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
                   <a
@@ -100,7 +118,7 @@ export default function Contact() {
                   </h3>
                   <p className="text-[#0070f3] font-medium">{dev.role}</p>
                 </div>
-                
+
                 {/* <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                   {dev.description}
                 </p> */}
@@ -127,42 +145,60 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Technical Support */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">Technical Support</h2>
+            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">
+              Technical Support
+            </h2>
             <p className="text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-              For technical issues, bug reports, or integration questions, please reach out through our support channels. We're committed to helping you get the most out of SplitMate.
+              For technical issues, bug reports, or integration questions,
+              please reach out through our support channels. We're committed to
+              helping you get the most out of SplitMate.
             </p>
           </div>
 
           {/* Business Inquiries */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">Business Inquiries</h2>
+            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">
+              Business Inquiries
+            </h2>
             <p className="text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-              Interested in partnerships, integrations, or business opportunities? We'd love to hear from you.
+              Interested in partnerships, integrations, or business
+              opportunities? We'd love to hear from you.
             </p>
           </div>
 
           {/* Feedback */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">Feedback</h2>
+            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">
+              Feedback
+            </h2>
             <p className="text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-              Your feedback helps us improve SplitMate. Share your thoughts, suggestions, and feature requests - we read every message and use your input to guide our development roadmap.
+              Your feedback helps us improve SplitMate. Share your thoughts,
+              suggestions, and feature requests - we read every message and use
+              your input to guide our development roadmap.
             </p>
           </div>
 
           {/* Contributing */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">Contributing</h2>
+            <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">
+              Contributing
+            </h2>
             <p className="text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-              SplitMate is open to community contributions. Check our GitHub repository for contribution guidelines and current development needs.
+              SplitMate is open to community contributions. Check our GitHub
+              repository for contribution guidelines and current development
+              needs.
             </p>
           </div>
         </div>
 
         {/* Response Time */}
         <div className="mt-8 bg-gradient-to-r from-[#0070f3]/10 to-[#00d4aa]/10 rounded-xl p-6 border border-[#0070f3]/20">
-          <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">Response Time</h2>
+          <h2 className="text-xl font-semibold mb-3 text-[#00d4aa]">
+            Response Time
+          </h2>
           <p className="text-gray-700 dark:text-gray-200">
-            We typically respond to all inquiries within 24-48 hours during business days.
+            We typically respond to all inquiries within 24-48 hours during
+            business days.
           </p>
         </div>
       </div>

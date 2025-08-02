@@ -12,11 +12,16 @@ export async function GET(request: Request, props: { params: Promise<{ address: 
       return new Response(JSON.stringify({ message: "Profile not found" }), { status: 404 });
     }
     return new Response(JSON.stringify(profile), { status: 200 });
-  } catch (error) {
-  console.error("Server Error:", error); 
+   } catch (error: unknown) {
+  console.error("Server Error:", error);
+
+  let errorMessage = "Unknown error";
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  }
 
   return new Response(
-    JSON.stringify({ error: "Server error", details: error.message || String(error) }),
+    JSON.stringify({ error: "Server error", details: errorMessage }),
     { status: 500 }
   );
 }

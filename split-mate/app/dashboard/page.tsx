@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import BillDashboard from "@/app/service/BillDashboard";
 import { TrendingUp, TrendingDown, Users } from "lucide-react";
 import { motion } from "framer-motion";
-
+export const dynamic = "force-dynamic"; 
 export default function DashboardOverview() {
   const { dashboardData, fetchDashboardData, isLoading, username } = useDashboard();
 

@@ -1,11 +1,10 @@
 "use client";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Client } from "@xmtp/xmtp-js";
 import { useAccount, useWalletClient } from "wagmi";
 import { walletClientToSigner } from "../lib/ethers-adapter";
 
 type XMTPContextType = {
-  client: Client | null;
+client: any | null;
   isConnected: boolean;
   isXmtpConnected: boolean;
   initializeXMTP: () => Promise<void>;
@@ -22,7 +21,7 @@ type XMTPContextType = {
 const XMTPContext = createContext<XMTPContextType | undefined>(undefined);
 
 export const XMTPProvider = ({ children }: { children: ReactNode }) => {
-  const [client, setClient] = useState<Client | null>(null);
+const [client, setClient] = useState<any | null>(null);
   const { address, isConnected: isWalletConnected } = useAccount();
   const { data: walletClient } = useWalletClient();
   const [isConnected, setIsConnected] = useState(false);
@@ -31,30 +30,37 @@ export const XMTPProvider = ({ children }: { children: ReactNode }) => {
   const isXmtpConnected = !!client;
   const [initError, setInitError] = useState<string | null>(null);
   
-  const initializeXMTP = async () => {
-    if (!walletClient || !address || isInitializing) return;
-    setIsInitializing(true);
+ // REMOVE this:
+// import { Client } from "@xmtp/xmtp-js";
+
+const initializeXMTP = async () => {
+  if (!walletClient || !address || isInitializing) return;
+  setIsInitializing(true);
+  setInitError(null);
+
+  try {
+    if (client && lastWalletAddress === address) return;
+
+    const { Client } = await import("@xmtp/xmtp-js");
+    const signer = walletClientToSigner(walletClient);
+    const xmtpClient = await Client.create(signer, {
+      env: (process.env.NEXT_PUBLIC_XMTP_ENV as "dev" | "production") || "dev",
+    });
+
+    setClient(xmtpClient);
+    setIsConnected(true);
+    setLastWalletAddress(address);
     setInitError(null);
-    try {
-      if (client && lastWalletAddress === address) return; // Already initialized for this wallet
-      const signer = walletClientToSigner(walletClient);
-      const xmtpClient = await Client.create(signer, {
-        env: (process.env.NEXT_PUBLIC_XMTP_ENV as "dev" | "production") || "dev",
-      });
-      setClient(xmtpClient);
-      setIsConnected(true);
-      setLastWalletAddress(address);
-      setInitError(null);
-      console.log("XMTP client initialized successfully!", xmtpClient.address);
-    } catch (error: any) {
-      setClient(null);
-      setIsConnected(false);
-      setInitError(error?.message || "Failed to initialize XMTP client");
-      console.error("Failed to initialize XMTP client:", error);
-    } finally {
-      setIsInitializing(false);
-    }
-  };
+    console.log("XMTP client initialized successfully!", xmtpClient.address);
+  } catch (error: any) {
+    setClient(null);
+    setIsConnected(false);
+    setInitError(error?.message || "Failed to initialize XMTP client");
+    console.error("Failed to initialize XMTP client:", error);
+  } finally {
+    setIsInitializing(false);
+  }
+};
 
   const sendMessage = async (recipientAddress: string, message: string) => {
     if (!client) {

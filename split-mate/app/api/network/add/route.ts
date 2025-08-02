@@ -3,6 +3,7 @@
 import dbConnect from "@/app/lib/models/mongodb"; // Use aliased paths
 import Network from "@/app/lib/models/Network";
 import Profile from "@/app/lib/models/Profile";
+import { Friend } from "@/app/lib/models/Network"; // Adjust the path if needed
 
 export async function POST(request: Request) {
   try {
@@ -17,9 +18,10 @@ export async function POST(request: Request) {
     }
 
     // --- CRITICAL UNIQUENESS CHECK ---
-    const friendExists = userNetwork.friends.some(
-      (friend) => friend.address.toLowerCase() === lowerCaseFriendAddress
-    );
+   const friendExists = userNetwork.friends.some(
+  (friend: Friend) => friend.address.toLowerCase() === lowerCaseFriendAddress
+);
+
 
     if (friendExists) {
       return new Response(JSON.stringify({ success: true, message: "Friend already in network." }), { status: 200 });
