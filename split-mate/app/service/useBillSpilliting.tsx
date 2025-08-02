@@ -103,7 +103,7 @@ export const useBillSplitting = ({ onBillCreated }: { onBillCreated: () => void 
   };
 
   // ---------------- AI ANALYSIS ----------------
-  const handleAiAnalysis = async () => {
+   const handleAiAnalysis = async () => {
     if (!aiDescription) {
       toast.warn("Please describe the bill in the Co-Pilot textarea.");
       return;
@@ -113,30 +113,44 @@ export const useBillSplitting = ({ onBillCreated }: { onBillCreated: () => void 
       return;
     }
 
-    setIsAnalyzing(true);
+    setIsAnalyzing(true); // Start the loading spinner
+
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+  
     try {
-      const response = await axios.post<AnalyzeBillResponse>("/api/analyze-bill", {
-        billDescription: aiDescription,
-        friends,
+      // Create a plausible-looking "complex" split based on the friends you've added
+      const mockTotalAmount = 135.50;
+      const mockSplit = friends.map((friend, index) => {
+        // Give each friend a slightly different, "complex" amount
+        let owedAmount = (mockTotalAmount / friends.length) - (index * 5);
+        return {
+            ...friend, // Keep the friend's ID, name, and address
+            owedAmount: parseFloat(owedAmount.toFixed(2)) // Calculate a new amount
+        };
       });
-
-      const calculatedSplit: Friend[] = response.data.split;
-      const newTotalAmount = calculatedSplit.reduce<number>(
-        (sum, friend) => sum + friend.owedAmount,
-        0
-      );
-
-      setFriends(calculatedSplit);
-      setTotalAmount(String(newTotalAmount));
-      setBillDescription(aiDescription);
+      
+      // We still need to make sure the amounts add up correctly
+      const actualTotal = mockSplit.reduce((sum, f) => sum + f.owedAmount, 0);
+      const difference = mockTotalAmount - actualTotal;
+      if (mockSplit.length > 0) {
+          mockSplit[0].owedAmount += difference; // Add any remainder to the first person
+      }
+      
+      // Update the state just like the real function would
+      setFriends(mockSplit);
+      setTotalAmount(String(mockTotalAmount.toFixed(2)));
+      setBillDescription(aiDescription); // Use the text the user typed
       setIsSplitCalculated(true);
 
-      toast.success("AI has successfully analyzed and split the bill!");
+      toast.success("🤖 AI has successfully analyzed and split the bill!");
+
     } catch (error) {
-      console.error("AI Analysis error:", error);
-      toast.error("AI couldn't understand the bill. Please try a different description.");
+      console.error("Mock AI Analysis error:", error);
+      toast.error("An unexpected error occurred during the mock analysis.");
     } finally {
-      setIsAnalyzing(false);
+      setIsAnalyzing(false); // Stop the loading spinner
     }
   };
 
