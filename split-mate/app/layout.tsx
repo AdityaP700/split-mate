@@ -7,7 +7,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { AmountProvider } from "./context/AmountContext";
 import dynamic from "next/dynamic";
-
+import { Analytics } from "@vercel/analytics/next"
 const XmtpProviderWrapper = dynamic(
   () => import('@/app/context/XMTPProviderClient'), 
   { 
@@ -38,6 +38,7 @@ export default function RootLayout({
           <AmountProvider>
             {/* --- CHANGE 2: Use the wrapper component here --- */}
             <XmtpProviderWrapper>
+              <Analytics /> 
               {children}
             </XmtpProviderWrapper>
           </AmountProvider>
