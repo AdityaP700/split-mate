@@ -1,10 +1,11 @@
-# 🚀 SplitMate
+#  SplitMate
 
 <div align="center">
 
-![SplitMate Logo](./assets/logo.png)
+<img src="split-mate/public/images/Splitmate-logo.png" alt="SplitMate Logo" width="200"/>
 
-**The Future of Bill Splitting** 💫
+
+**The Future of Bill Splitting** 
 
 *A modern, blockchain-powered expense sharing app with real-time chat integration and AI-powered insights*
 
@@ -14,34 +15,34 @@
 [![Base](https://img.shields.io/badge/Base-L2-blue?logo=ethereum)](https://base.org/)
 [![XMTP](https://img.shields.io/badge/XMTP-Protocol-green)](https://xmtp.org/)
 
-[🎮 **Live Demo**](https://splitmate-demo.vercel.app) • [📖 **Documentation**](./docs) • [🐛 **Report Bug**](https://github.com/your-username/splitmate/issues) • [✨ **Request Feature**](https://github.com/your-username/splitmate/issues)
+[ **Live Demo**](https://split-mate-43.vercel.app/) • [🐛 **Report Bug**](https://github.com/AdityaP700/split-mate/issues) • [ **Request Feature**](https://github.com/AdityaP700/split-mate/issues)
 
 </div>
 
 ---
 
-## 🎯 What is SplitMate?
+##  What is SplitMate?
 
 SplitMate revolutionizes how groups handle shared expenses by combining the power of **blockchain technology**, **real-time messaging**, and **AI intelligence** into one seamless experience. Say goodbye to awkward payment requests and hello to instant, transparent, and secure bill splitting.
 
-> 💡 **Perfect for:** Friend groups, roommates, team lunches, travel expenses, event planning, and any scenario where money needs to be split fairly and quickly.
+>  **Perfect for:** Friend groups, roommates, team lunches, travel expenses, event planning, and any scenario where money needs to be split fairly and quickly.
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 <div align="center">
 
-| 🌟 **Feature** | 📝 **Description** |
+|  **Feature** |  **Description** |
 |:---|:---|
-| 💬 **Real-time Group Chat** | Built on XMTP protocol for decentralized, secure messaging |
-| ⚡ **Instant Crypto Payments** | Lightning-fast transactions on Base L2 blockchain |
-| 🔐 **Secure Wallet Auth** | Coinbase Wallet integration for enterprise-grade security |
-| 🤖 **AI-Powered Analysis** | Smart context interpretation and automatic split suggestions |
-| ⚖️ **Equal Bill Splitting** | Automatic fair distribution among all participants |
-| 🔄 **Live Database Sync** | Real-time data synchronization across all devices |
-| 📱 **QR Code Payments** | Scan-and-pay functionality for ultimate convenience |
-| 🎨 **Modern UI/UX** | Clean, intuitive interface built with Tailwind CSS |
+|  **Real-time Group Chat** | Built on XMTP protocol for decentralized, secure messaging |
+|  **Instant Crypto Payments** | Lightning-fast transactions on Base L2 blockchain |
+|  **Secure Wallet Auth** | Coinbase Wallet integration for enterprise-grade security |
+|  **AI-Powered Analysis** | Smart context interpretation and automatic split suggestions |
+|  **Equal Bill Splitting** | Automatic fair distribution among all participants |
+|  **Live Database Sync** | Real-time data synchronization across all devices |
+|  **QR Code Payments** | Scan-and-pay functionality for ultimate convenience |
+|  **Modern UI/UX** | Clean, intuitive interface built with Tailwind CSS |
 
 </div>
 
@@ -55,28 +56,31 @@ SplitMate revolutionizes how groups handle shared expenses by combining the powe
 *Coming Soon: Watch SplitMate in action*
 
 <!-- Replace with actual demo video -->
-[![SplitMate Demo](./assets/demo-thumbnail.png)](https://youtu.be/your-demo-video)
+[![SplitMate Demo](https://i9.ytimg.com/vi_webp/RhhYSie9T_4/maxresdefault.webp?v=688fa9e7&sqp=CPzSvsQG&rs=AOn4CLBKSXNWKoqfIqiPrkg1G1N-OjJbGA)](https://youtu.be/RhhYSie9T_4)
 
-*Click to watch the full demo (2 minutes)*
 
-</div>
-
-### 📱 Application Screenshots
-
-<div align="center">
-
-| 🏠 Home Screen | 💬 Chat Interface | 💰 Payment Flow |
-|:---:|:---:|:---:|
-| ![Home](./assets/screenshots/home.png) | ![Chat](./assets/screenshots/chat.png) | ![Payment](./assets/screenshots/payment.png) |
-| *Clean, modern landing* | *Real-time XMTP messaging* | *Seamless crypto transactions* |
+*Click to watch the full demo (3 minutes)*
 
 </div>
 
-### 🖥️ Desktop Experience
+###  Application Screenshots
 
 <div align="center">
 
-![Desktop View](./assets/screenshots/desktop-full.png)
+|  Home Screen |  Chat Interface | 
+|:---:|:---:
+| ![Home](.\split-mate\public\images\HomePage.png) | ![Chat](.\split-mate\public\images\ChatInterfacec.png) |  
+| *Clean, modern landing* | *Real-time XMTP messaging* 
+
+</div>
+
+###  Desktop Experience
+
+<div align="center">
+
+ [Click here to watch the SplitMate Demo](https://github.com/user-attachments/assets/003f2c6a-e71a-415e-9706-e704fd2653ea)
+
+
 *Full desktop experience with multi-panel layout*
 
 </div>
@@ -127,7 +131,7 @@ SplitMate revolutionizes how groups handle shared expenses by combining the powe
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/splitmate.git
+git clone https://github.com/your-username/split-mate.git
 cd splitmate
 
 # Install dependencies
@@ -194,31 +198,31 @@ graph TD
 
 ### Step-by-Step Process
 
-1. **🔐 Secure Connection** - Users connect their Coinbase Wallet for authentication
-2. **💬 Real-time Chat** - Join group conversations via XMTP's decentralized protocol
-3. **💰 Bill Input** - Enter the total amount to be split among participants
-4. **🤖 AI Magic** - Our AI analyzes context and suggests optimal split strategies
-5. **⚖️ Fair Division** - Automatic equal splitting with precision calculations
-6. **⚡ Instant Payments** - Lightning-fast crypto transactions on Base L2
-7. **✅ Live Updates** - Real-time confirmation and receipt generation
+1. **Secure Connection** - Users connect their Coinbase Wallet for authentication
+2. **Real-time Chat** - Join group conversations via XMTP's decentralized protocol
+3. **Bill Input** - Enter the total amount to be split among participants
+4. **AI Magic** - Our AI analyzes context and suggests optimal split strategies
+5. **Fair Division** - Automatic equal splitting with precision calculations
+6. **Instant Payments** - Lightning-fast crypto transactions on Base L2
+7. **Live Updates** - Real-time confirmation and receipt generation
 
 ---
 
-## 🎯 Use Cases
+## Use Cases
 
-### 🍕 **Dinner with Friends**
+###  **Dinner with Friends**
 > *"4 friends, ₹4000 bill, split equally in seconds with crypto payments"*
 
-### 🏠 **Roommate Expenses** 
+###  **Roommate Expenses** 
 > *"Monthly utilities, groceries, and shared costs managed transparently"*
 
-### ✈️ **Group Travel**
+###  **Group Travel**
 > *"Hotels, flights, and activities split fairly among travel companions"*
 
-### 🎉 **Event Planning**
+###  **Event Planning**
 > *"Party supplies, venue costs, and catering shared among organizers"*
 
-### 💼 **Team Lunches**
+###  **Team Lunches**
 > *"Office meals and team building expenses handled professionally"*
 
 ---
@@ -230,11 +234,11 @@ We ❤️ contributions! SplitMate is built by the community, for the community.
 ### 🌟 Ways to Contribute
 
 - 🐛 **Bug Reports** - Help us squash bugs
-- ✨ **Feature Requests** - Share your brilliant ideas  
-- 📝 **Documentation** - Improve our docs
-- 🔧 **Code Contributions** - Add new features or fix issues
-- 🎨 **Design** - Enhance UI/UX and user experience
-- 🧪 **Testing** - Help us ensure quality
+-  **Feature Requests** - Share your brilliant ideas  
+-  **Documentation** - Improve our docs
+-  **Code Contributions** - Add new features or fix issues
+-  **Design** - Enhance UI/UX and user experience
+-  **Testing** - Help us ensure quality
 
 ### 🚀 Quick Contribution Guide
 
@@ -242,7 +246,7 @@ We ❤️ contributions! SplitMate is built by the community, for the community.
 # 1. Fork the repository on GitHub
 
 # 2. Clone your fork
-git clone https://github.com/YOUR_USERNAME/splitmate.git
+git clone https://github.com/YOUR_USERNAME/split-mate.git
 
 # 3. Create a feature branch
 git checkout -b feature/amazing-new-feature
@@ -259,7 +263,7 @@ git push origin feature/amazing-new-feature
 ### 📋 Development Guidelines
 
 - Follow our [Code of Conduct](./CODE_OF_CONDUCT.md)
-- Check existing [issues](https://github.com/your-username/splitmate/issues) before creating new ones
+- Check existing [issues](https://github.com/AdityaP700/split-mate/issues) before creating new ones
 - Write clear commit messages using [Conventional Commits](https://conventionalcommits.org/)
 - Add tests for new features
 - Update documentation as needed
@@ -275,8 +279,8 @@ git push origin feature/amazing-new-feature
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/adityapattanayak">
-        <img src="https://github.com/adityapattanayak.png" width="100px;" alt="Aditya Pattanayak"/>
+      <a href="https://github.com/AdityaP700">
+        <img src="https://github.com/AdityaP700.png" width="100px;" alt="Aditya Pattanayak"/>
         <br />
         <sub><b>Aditya Pattanayak</b></sub>
       </a>
@@ -285,12 +289,12 @@ git push origin feature/amazing-new-feature
       <br />
       <sub>XMTP • Database • Architecture</sub>
       <br />
-      <a href="https://www.linkedin.com/in/adityapattanayak/">💼</a>
+      <a href="https://www.linkedin.com/in/aditya-pattanayak-6b303b267/">💼</a>
       <a href="https://x.com/AdityaPat_">🐦</a>
     </td>
     <td align="center">
-      <a href="https://github.com/vidipghosh">
-        <img src="https://github.com/vidipghosh.png" width="100px;" alt="Vidip Ghosh"/>
+      <a href="https://github.com/ghoshvidip26">
+        <img src="https://github.com/ghoshvidip26.png" width="100px;" alt="Vidip Ghosh"/>
         <br />
         <sub><b>Vidip Ghosh</b></sub>
       </a>
@@ -299,34 +303,25 @@ git push origin feature/amazing-new-feature
       <br />
       <sub>Frontend • Web3 • Wallet Integration</sub>
       <br />
-      <a href="https://www.linkedin.com/in/vidip-ghosh/">💼</a>
+      <a href="https://www.linkedin.com/in/ghoshvidip26/">💼</a>
       <a href="https://x.com/ghoshvidip26">🐦</a>
     </td>
   </tr>
 </table>
 
-### 🌟 All Contributors
-
-Thanks to all our amazing contributors who make SplitMate possible!
-
-[![Contributors](https://contrib.rocks/image?repo=your-username/splitmate)](https://github.com/your-username/splitmate/graphs/contributors)
-
-</div>
-
----
 
 ## 📊 Project Stats
 
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/your-username/splitmate?style=social)
-![GitHub forks](https://img.shields.io/github/forks/your-username/splitmate?style=social)
-![GitHub issues](https://img.shields.io/github/issues/your-username/splitmate)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/splitmate)
+![GitHub stars](https://img.shields.io/github/stars/AdityaP700/split-mate?style=social)
+![GitHub forks](https://img.shields.io/github/forks/AdityaP700/split-mate?style=social)
+![GitHub issues](https://img.shields.io/github/issues/AdityaP700/split-mate)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/AdityaP700/split-mate)
 
-![GitHub top language](https://img.shields.io/github/languages/top/your-username/splitmate)
-![GitHub code size](https://img.shields.io/github/languages/code-size/your-username/splitmate)
-![GitHub last commit](https://img.shields.io/github/last-commit/your-username/splitmate)
+![GitHub top language](https://img.shields.io/github/languages/top/AdityaP700/split-mate)
+![GitHub code size](https://img.shields.io/github/languages/code-size/AdityaP700/split-mate)
+![GitHub last commit](https://img.shields.io/github/last-commit/AdityaP700/split-mate)
 
 </div>
 
@@ -360,21 +355,9 @@ Thanks to all our amazing contributors who make SplitMate possible!
 
 ---
 
-## 🆘 Support
-
-### 📚 Documentation
-- [📖 Full Documentation](./docs)
-- [🚀 API Reference](./docs/api)
-- [❓ FAQ](./docs/faq.md)
-- [🎯 Tutorials](./docs/tutorials)
-
-### 💬 Community
-- [💬 Discord Community](https://discord.gg/splitmate)
-- [🐦 Twitter Updates](https://twitter.com/splitmate_app)
-- [📧 Email Support](mailto:support@splitmate.app)
 
 ### 🐛 Issues & Bugs
-Found a bug? Please check our [issue tracker](https://github.com/your-username/splitmate/issues) and create a new issue if it doesn't exist.
+Found a bug? Please check our [issue tracker](https://github.com/AdityaP700/split-mate/issues) and create a new issue if it doesn't exist.
 
 ---
 
@@ -409,7 +392,7 @@ Special thanks to:
 
 ### 🚀 Ready to revolutionize bill splitting?
 
-**[⭐ Star this repo](https://github.com/your-username/splitmate)** • **[🍴 Fork it](https://github.com/your-username/splitmate/fork)** • **[📖 Read the docs](./docs)**
+**[⭐ Star this repo](https://github.com/AdityaP700/split-mate)** • **[🍴 Fork it](https://github.com/AdityaP700/split-mate/fork)** • **[📖 Read the docs](./docs)**
 
 ---
 
