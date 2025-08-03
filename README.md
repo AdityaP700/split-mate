@@ -164,26 +164,9 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see SplitMate in action! 🎉
+Open [http://localhost:3000](http://localhost:3000) to see SplitMate in action! 
 
 ---
-
-## 📖 How It Works
-
-<div align="center">
-
-```mermaid
-graph TD
-    A[👤 Connect Wallet] --> B[💬 Join XMTP Chat]
-    B --> C[💰 Enter Bill Amount]
-    C --> D[🤖 AI Analysis]
-    D --> E[⚖️ Auto Split Calculation]
-    E --> F[📤 Send Payment Requests]
-    F --> G[⚡ Crypto Payments]
-    G --> H[✅ Confirmation & Receipt]
-```
-
-</div>
 
 ### Step-by-Step Process
 
@@ -258,8 +241,6 @@ git push origin feature/amazing-new-feature
 - Update documentation as needed
 
 ---
-
-## 🎖️ Contributors
 
 <div align="center">
 
@@ -368,12 +349,12 @@ MIT License - feel free to use this project for any purposes!
 
 Special thanks to:
 
-- 🌐 **XMTP Team** - For building the decentralized messaging protocol
-- ⚡ **Base Team** - For providing fast, affordable blockchain infrastructure  
-- 🔐 **Coinbase** - For the excellent wallet SDK and developer tools
-- 🎨 **Tailwind CSS** - For the amazing utility-first CSS framework
-- 💙 **Next.js Team** - For the powerful React framework
-- 🌟 **Open Source Community** - For inspiration and continuous support
+-  **XMTP Team** - For building the decentralized messaging protocol
+-  **Base Team** - For providing fast, affordable blockchain infrastructure  
+-  **Coinbase** - For the excellent wallet SDK and developer tools
+-  **Tailwind CSS** - For the amazing utility-first CSS framework
+-  **Next.js Team** - For the powerful React framework
+-  **Open Source Community** - For inspiration and continuous support
 
 ---
 
@@ -381,7 +362,7 @@ Special thanks to:
 
 ### 🚀 Ready to revolutionize bill splitting?
 
-**[⭐ Star this repo](https://github.com/AdityaP700/split-mate)** • **[🍴 Fork it](https://github.com/AdityaP700/split-mate/fork)** • **[📖 Read the docs](./docs)**
+**[⭐ Star this repo](https://github.com/AdityaP700/split-mate)** • **[🍴 Fork it](https://github.com/AdityaP700/split-mate/fork)** 
 
 ---
 
