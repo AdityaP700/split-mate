@@ -48,9 +48,9 @@ SplitMate revolutionizes how groups handle shared expenses by combining the powe
 
 ---
 
-## 🎬 Demo & Screenshots
+##  Demo & Screenshots
 
-### 📹 Video Demo
+###  Video Demo
 <div align="center">
 
 *Coming Soon: Watch SplitMate in action*
@@ -60,17 +60,6 @@ SplitMate revolutionizes how groups handle shared expenses by combining the powe
 
 
 *Click to watch the full demo (3 minutes)*
-
-</div>
-
-###  Application Screenshots
-
-<div align="center">
-
-|  Home Screen |  Chat Interface | 
-|:---:|:---:
-| ![Home](.\split-mate\public\images\HomePage.png) | ![Chat](.\split-mate\public\images\ChatInterfacec.png) |  
-| *Clean, modern landing* | *Real-time XMTP messaging* 
 
 </div>
 
@@ -87,7 +76,7 @@ SplitMate revolutionizes how groups handle shared expenses by combining the powe
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 <div align="center">
 
@@ -108,18 +97,18 @@ SplitMate revolutionizes how groups handle shared expenses by combining the powe
 
 | **Category** | **Technology** | **Purpose** |
 |:---|:---|:---|
-| 🎨 **Frontend** | Next.js 13+ | React framework with SSR/CSR hybrid |
-| 🔷 **Language** | TypeScript | Type-safe development environment |
-| 💅 **Styling** | Tailwind CSS | Utility-first CSS framework |
-| 💬 **Messaging** | XMTP Protocol | Decentralized real-time communication |
-| ⛓️ **Blockchain** | Base L2 | Fast, low-cost Ethereum scaling solution |
-| 🔐 **Wallet** | Coinbase Wallet SDK | Secure authentication and transactions |
-| 🌐 **Web3** | Ethers.js | Ethereum library for blockchain interaction |
-| 🤖 **AI** | Custom AI Engine | Context analysis and smart suggestions |
+|  **Frontend** | Next.js 13+ | React framework with SSR/CSR hybrid |
+|  **Language** | TypeScript | Type-safe development environment |
+|  **Styling** | Tailwind CSS | Utility-first CSS framework |
+|  **Messaging** | XMTP Protocol | Decentralized real-time communication |
+|  **Blockchain** | Base L2 | Fast, low-cost Ethereum scaling solution |
+|  **Wallet** | Coinbase Wallet SDK | Secure authentication and transactions |
+|  **Web3** | Ethers.js | Ethereum library for blockchain interaction |
+|  **AI** | Custom AI Engine | Context analysis and smart suggestions |
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
