@@ -1,171 +1,420 @@
-#  SplitMate
+# 🚀 SplitMate
 
-**SplitMate** is a modern, blockchain-powered bill-splitting application that simplifies shared expenses through real-time group chat integration, AI-powered context awareness, and seamless crypto transactions — all built with a user-centric design.
+<div align="center">
+
+![SplitMate Logo](./assets/logo.png)
+
+**The Future of Bill Splitting** 💫
+
+*A modern, blockchain-powered expense sharing app with real-time chat integration and AI-powered insights*
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-13+-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.9+-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Base](https://img.shields.io/badge/Base-L2-blue?logo=ethereum)](https://base.org/)
+[![XMTP](https://img.shields.io/badge/XMTP-Protocol-green)](https://xmtp.org/)
+
+[🎮 **Live Demo**](https://splitmate-demo.vercel.app) • [📖 **Documentation**](./docs) • [🐛 **Report Bug**](https://github.com/your-username/splitmate/issues) • [✨ **Request Feature**](https://github.com/your-username/splitmate/issues)
+
+</div>
 
 ---
 
-##  Overview
+## 🎯 What is SplitMate?
 
-SplitMate enables **equal splitting of bills** in a chat-based interface, with direct **crypto payments on Base blockchain**. Users connect via **Coinbase Wallet** and collaborate over **XMTP messaging**, while the system fetches real-time group data and intelligently manages the split.
+SplitMate revolutionizes how groups handle shared expenses by combining the power of **blockchain technology**, **real-time messaging**, and **AI intelligence** into one seamless experience. Say goodbye to awkward payment requests and hello to instant, transparent, and secure bill splitting.
 
-> 🎯 Perfect for friends, roommates, or event attendees who want to simplify expense sharing in a transparent, secure, and futuristic way.
+> 💡 **Perfect for:** Friend groups, roommates, team lunches, travel expenses, event planning, and any scenario where money needs to be split fairly and quickly.
 
 ---
 
 ## ✨ Key Features
 
-| Feature | Description |
-|--------|-------------|
-| **Group-aware Messaging** | Integrated with XMTP to fetch and display real-time participants in the chat. |
-|  **Crypto Payments on Base** | Participants pay directly using Base L2 blockchain. |
-|  **Coinbase Wallet Auth** | Fully secure wallet-based login & transaction handling. |
-|  **AI Grant Analyzer** | Smart AI interprets the message context and proposes suggested grant amounts. |
-|  **Equal Bill Splitting** | Automatically splits the total bill among all participants. |
-|  **Live DB Sync** | Pulls and displays data directly from the live backend database. |
-|  **QR Code Generation** | For unique claim cases, QR codes are generated for seamless scan-and-pay functionality. |
-|  **Coming Soon: Custom Split** | Planned support for non-equal, user-defined splits. |
-|  **Demo Portals** | Planned addition of public demo instances (landing page + interactive preview). |
+<div align="center">
+
+| 🌟 **Feature** | 📝 **Description** |
+|:---|:---|
+| 💬 **Real-time Group Chat** | Built on XMTP protocol for decentralized, secure messaging |
+| ⚡ **Instant Crypto Payments** | Lightning-fast transactions on Base L2 blockchain |
+| 🔐 **Secure Wallet Auth** | Coinbase Wallet integration for enterprise-grade security |
+| 🤖 **AI-Powered Analysis** | Smart context interpretation and automatic split suggestions |
+| ⚖️ **Equal Bill Splitting** | Automatic fair distribution among all participants |
+| 🔄 **Live Database Sync** | Real-time data synchronization across all devices |
+| 📱 **QR Code Payments** | Scan-and-pay functionality for ultimate convenience |
+| 🎨 **Modern UI/UX** | Clean, intuitive interface built with Tailwind CSS |
+
+</div>
 
 ---
 
-## 🛠 Tech Stack
+## 🎬 Demo & Screenshots
 
-| Technology | Purpose |
-|------------|---------|
-| **Next.js** | Frontend, routing, SSR/CSR hybrid |
-| **XMTP** | Decentralized chat/messaging |
-| **Base Blockchain (L2)** | Crypto payment rail |
-| **Coinbase Wallet SDK** | Authentication and payment |
-| **Tailwind CSS** | UI styling and responsiveness |
-| **Ethers.js** | Blockchain interaction layer |
-| **TypeScript** | Type-safe development |
+### 📹 Video Demo
+<div align="center">
+
+*Coming Soon: Watch SplitMate in action*
+
+<!-- Replace with actual demo video -->
+[![SplitMate Demo](./assets/demo-thumbnail.png)](https://youtu.be/your-demo-video)
+
+*Click to watch the full demo (2 minutes)*
+
+</div>
+
+### 📱 Application Screenshots
+
+<div align="center">
+
+| 🏠 Home Screen | 💬 Chat Interface | 💰 Payment Flow |
+|:---:|:---:|:---:|
+| ![Home](./assets/screenshots/home.png) | ![Chat](./assets/screenshots/chat.png) | ![Payment](./assets/screenshots/payment.png) |
+| *Clean, modern landing* | *Real-time XMTP messaging* | *Seamless crypto transactions* |
+
+</div>
+
+### 🖥️ Desktop Experience
+
+<div align="center">
+
+![Desktop View](./assets/screenshots/desktop-full.png)
+*Full desktop experience with multi-panel layout*
+
+</div>
 
 ---
 
-##  How It Works
+## 🛠️ Tech Stack
 
-1. **Connect your Wallet** – Login securely via Coinbase Wallet.
-2. **Join Chat via XMTP** – App fetches participant details dynamically.
-3. **Enter Amount** – The total bill is input manually or fetched automatically.
-4. **AI Analysis (Optional)** – The system suggests splits based on chat context.
-5. **Auto Split & Request** – The amount is evenly divided and requested.
-6. **Instant Pay** – Each member pays their share directly using crypto.
-7. **Confirmation** – Status and receipt are updated live in the group chat.
+<div align="center">
+
+### Frontend
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+
+### Blockchain & Web3
+![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
+![Web3](https://img.shields.io/badge/Web3-F16822?style=for-the-badge&logo=web3.js&logoColor=white)
+
+### Communication
+![XMTP](https://img.shields.io/badge/XMTP-6366F1?style=for-the-badge&logoColor=white)
+
+</div>
+
+| **Category** | **Technology** | **Purpose** |
+|:---|:---|:---|
+| 🎨 **Frontend** | Next.js 13+ | React framework with SSR/CSR hybrid |
+| 🔷 **Language** | TypeScript | Type-safe development environment |
+| 💅 **Styling** | Tailwind CSS | Utility-first CSS framework |
+| 💬 **Messaging** | XMTP Protocol | Decentralized real-time communication |
+| ⛓️ **Blockchain** | Base L2 | Fast, low-cost Ethereum scaling solution |
+| 🔐 **Wallet** | Coinbase Wallet SDK | Secure authentication and transactions |
+| 🌐 **Web3** | Ethers.js | Ethereum library for blockchain interaction |
+| 🤖 **AI** | Custom AI Engine | Context analysis and smart suggestions |
 
 ---
 
-##  Installation & Setup
+## 🚀 Quick Start
 
-### 1. Clone the Repository
+### Prerequisites
+
+- Node.js 18+ and npm/yarn
+- A Coinbase Wallet
+- Basic understanding of Web3 concepts
+
+### 1️⃣ Clone & Install
 
 ```bash
+# Clone the repository
 git clone https://github.com/your-username/splitmate.git
 cd splitmate
-````
 
-### 2. Install Dependencies
-
-```bash
+# Install dependencies
 npm install
+# or
+yarn install
 ```
 
-### 3. Create Environment File
+### 2️⃣ Environment Setup
 
 Create a `.env.local` file in the root directory:
 
 ```env
+# Application Settings
 NODE_ENV=development
 NEXT_RUNTIME="nodejs"
-
-NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your_project_id
-NEXT_PUBLIC_BASE_GOERLI_RPC_URL=https://goerli.base.org
-
-NEXT_PUBLIC_XMTP_ENV=production
-NEXT_PUBLIC_XMTP_API_KEY=your_xmtp_api_key
-
 NEXT_PUBLIC_DEV_MODE=true
+
+# Wallet Configuration
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your_project_id_here
+
+# Blockchain Configuration
+NEXT_PUBLIC_BASE_GOERLI_RPC_URL=https://goerli.base.org
+NEXT_PUBLIC_BASE_MAINNET_RPC_URL=https://mainnet.base.org
+
+# XMTP Configuration
+NEXT_PUBLIC_XMTP_ENV=production
+NEXT_PUBLIC_XMTP_API_KEY=your_xmtp_api_key_here
+
+# Optional: Development Settings
 NEXT_DEV_HTTPS=true
 NEXT_TELEMETRY_DISABLED=1
 NEXT_DISABLE_SENTRY=true
 ```
 
-### 4. Start the Development Server
+### 3️⃣ Run Development Server
 
 ```bash
 npm run dev
+# or
+yarn dev
 ```
 
----
-
-## 📦 Demo Portal (Coming Soon)
-
-We’re working on:
-
-* A public-facing **landing page**
-* Hosted **demo instance** for quick testing
-* QR-based **claim preview** for public wallets
-
-Stay tuned!
+Open [http://localhost:3000](http://localhost:3000) to see SplitMate in action! 🎉
 
 ---
 
-##  Example Use Case
+## 📖 How It Works
 
-> A group of 4 friends go out to dinner. One of them opens SplitMate, connects their wallet, and enters ₹4000. The app detects the group, splits it evenly (₹1000 each), and sends each member a request via the chat interface. Members pay in crypto via the Base chain — all within seconds.
+<div align="center">
+
+```mermaid
+graph TD
+    A[👤 Connect Wallet] --> B[💬 Join XMTP Chat]
+    B --> C[💰 Enter Bill Amount]
+    C --> D[🤖 AI Analysis]
+    D --> E[⚖️ Auto Split Calculation]
+    E --> F[📤 Send Payment Requests]
+    F --> G[⚡ Crypto Payments]
+    G --> H[✅ Confirmation & Receipt]
+```
+
+</div>
+
+### Step-by-Step Process
+
+1. **🔐 Secure Connection** - Users connect their Coinbase Wallet for authentication
+2. **💬 Real-time Chat** - Join group conversations via XMTP's decentralized protocol
+3. **💰 Bill Input** - Enter the total amount to be split among participants
+4. **🤖 AI Magic** - Our AI analyzes context and suggests optimal split strategies
+5. **⚖️ Fair Division** - Automatic equal splitting with precision calculations
+6. **⚡ Instant Payments** - Lightning-fast crypto transactions on Base L2
+7. **✅ Live Updates** - Real-time confirmation and receipt generation
 
 ---
 
-##  Contributing
+## 🎯 Use Cases
 
-We welcome contributors to improve SplitMate!
+### 🍕 **Dinner with Friends**
+> *"4 friends, ₹4000 bill, split equally in seconds with crypto payments"*
 
-### Steps to Contribute:
+### 🏠 **Roommate Expenses** 
+> *"Monthly utilities, groceries, and shared costs managed transparently"*
+
+### ✈️ **Group Travel**
+> *"Hotels, flights, and activities split fairly among travel companions"*
+
+### 🎉 **Event Planning**
+> *"Party supplies, venue costs, and catering shared among organizers"*
+
+### 💼 **Team Lunches**
+> *"Office meals and team building expenses handled professionally"*
+
+---
+
+## 🤝 Contributing
+
+We ❤️ contributions! SplitMate is built by the community, for the community.
+
+### 🌟 Ways to Contribute
+
+- 🐛 **Bug Reports** - Help us squash bugs
+- ✨ **Feature Requests** - Share your brilliant ideas  
+- 📝 **Documentation** - Improve our docs
+- 🔧 **Code Contributions** - Add new features or fix issues
+- 🎨 **Design** - Enhance UI/UX and user experience
+- 🧪 **Testing** - Help us ensure quality
+
+### 🚀 Quick Contribution Guide
 
 ```bash
-# 1. Fork the repo
-# 2. Create a feature branch
-git checkout -b feature/custom-split
+# 1. Fork the repository on GitHub
 
-# 3. Commit your changes
-git commit -m "Add custom split logic"
+# 2. Clone your fork
+git clone https://github.com/YOUR_USERNAME/splitmate.git
 
-# 4. Push to your branch
-git push origin feature/custom-split
+# 3. Create a feature branch
+git checkout -b feature/amazing-new-feature
 
-# 5. Open a Pull Request
+# 4. Make your changes and commit
+git commit -m "✨ Add amazing new feature"
+
+# 5. Push to your branch
+git push origin feature/amazing-new-feature
+
+# 6. Open a Pull Request
 ```
 
-Before opening a PR, please check for breaking changes and test your implementation.
+### 📋 Development Guidelines
+
+- Follow our [Code of Conduct](./CODE_OF_CONDUCT.md)
+- Check existing [issues](https://github.com/your-username/splitmate/issues) before creating new ones
+- Write clear commit messages using [Conventional Commits](https://conventionalcommits.org/)
+- Add tests for new features
+- Update documentation as needed
 
 ---
 
-## 👨‍💻 Contributors
+## 🎖️ Contributors
 
-| Name                                                               | Role                 | Description                                                                                              |
-| ------------------------------------------------------------------ | -------------------- | -------------------------------------------------------------------------------------------------------- |
-| [Aditya Pattanayak](https://www.linkedin.com/in/adityapattanayak/) | Full Stack Developer | Implemented XMTP Messaging, equal split logic, database interaction, and overall system integration.     |
-| [Vidip Ghosh](https://www.linkedin.com/in/vidip-ghosh/)            | Full Stack Developer | Developed the frontend UI/UX and implemented Coinbase Wallet integration with seamless blockchain logic. |
+<div align="center">
+
+### 🏆 Core Team
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/adityapattanayak">
+        <img src="https://github.com/adityapattanayak.png" width="100px;" alt="Aditya Pattanayak"/>
+        <br />
+        <sub><b>Aditya Pattanayak</b></sub>
+      </a>
+      <br />
+      <sub>🛠️ Full Stack Developer</sub>
+      <br />
+      <sub>XMTP • Database • Architecture</sub>
+      <br />
+      <a href="https://www.linkedin.com/in/adityapattanayak/">💼</a>
+      <a href="https://x.com/AdityaPat_">🐦</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/vidipghosh">
+        <img src="https://github.com/vidipghosh.png" width="100px;" alt="Vidip Ghosh"/>
+        <br />
+        <sub><b>Vidip Ghosh</b></sub>
+      </a>
+      <br />
+      <sub>🎨 Full Stack Developer</sub>
+      <br />
+      <sub>Frontend • Web3 • Wallet Integration</sub>
+      <br />
+      <a href="https://www.linkedin.com/in/vidip-ghosh/">💼</a>
+      <a href="https://x.com/ghoshvidip26">🐦</a>
+    </td>
+  </tr>
+</table>
+
+### 🌟 All Contributors
+
+Thanks to all our amazing contributors who make SplitMate possible!
+
+[![Contributors](https://contrib.rocks/image?repo=your-username/splitmate)](https://github.com/your-username/splitmate/graphs/contributors)
+
+</div>
 
 ---
 
-## 📬 Connect With Us
+## 📊 Project Stats
 
-Feel free to reach out or follow us for updates and support:
+<div align="center">
 
-* **Aditya Pattanayak**
-  [LinkedIn](https://www.linkedin.com/in/aditya-pattanayak-6b303b267/) | [X](https://x.com/AdityaPat_)
+![GitHub stars](https://img.shields.io/github/stars/your-username/splitmate?style=social)
+![GitHub forks](https://img.shields.io/github/forks/your-username/splitmate?style=social)
+![GitHub issues](https://img.shields.io/github/issues/your-username/splitmate)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/splitmate)
 
-* **Vidip Ghosh**
-  [LinkedIn](https://www.linkedin.com/in/ghoshvidip26/) | [X](https://x.com/ghoshvidip26)
+![GitHub top language](https://img.shields.io/github/languages/top/your-username/splitmate)
+![GitHub code size](https://img.shields.io/github/languages/code-size/your-username/splitmate)
+![GitHub last commit](https://img.shields.io/github/last-commit/your-username/splitmate)
+
+</div>
 
 ---
+
+## 🗺️ Roadmap
+
+### 🚀 **Phase 1: Core Features** *(Completed)*
+- [x] Wallet authentication
+- [x] XMTP integration
+- [x] Equal bill splitting
+- [x] Base blockchain payments
+
+### 🎯 **Phase 2: Enhanced Features** *(In Progress)*
+- [ ] 🎨 Custom split ratios
+- [ ] 📊 Expense analytics dashboard
+- [ ] 🔔 Push notifications
+- [ ] 📱 Mobile app (React Native)
+
+### 🌟 **Phase 3: Advanced Features** *(Planned)*
+- [ ] 🤖 Advanced AI suggestions
+- [ ] 🌍 Multi-chain support
+- [ ] 👥 Group management tools
+- [ ] 📈 Spending insights & reports
+
+### 🚀 **Phase 4: Scale & Growth** *(Future)*
+- [ ] 🏢 Enterprise features
+- [ ] 🔗 API for third-party integrations
+- [ ] 🌐 Multi-language support
+- [ ] 🎯 Advanced privacy features
+
+---
+
+## 🆘 Support
+
+### 📚 Documentation
+- [📖 Full Documentation](./docs)
+- [🚀 API Reference](./docs/api)
+- [❓ FAQ](./docs/faq.md)
+- [🎯 Tutorials](./docs/tutorials)
+
+### 💬 Community
+- [💬 Discord Community](https://discord.gg/splitmate)
+- [🐦 Twitter Updates](https://twitter.com/splitmate_app)
+- [📧 Email Support](mailto:support@splitmate.app)
+
+### 🐛 Issues & Bugs
+Found a bug? Please check our [issue tracker](https://github.com/your-username/splitmate/issues) and create a new issue if it doesn't exist.
+
+---
+
 ## 📄 License
 
-[MIT License](LICENSE)
+<div align="center">
+
+SplitMate is open source software licensed under the [MIT License](./LICENSE).
+
+```
+MIT License - feel free to use this project for any purposes!
+```
+
+</div>
 
 ---
 
-> *Building the future of expense sharing — fast, secure, and intelligent.*
+## 🙏 Acknowledgments
 
-```
+Special thanks to:
 
+- 🌐 **XMTP Team** - For building the decentralized messaging protocol
+- ⚡ **Base Team** - For providing fast, affordable blockchain infrastructure  
+- 🔐 **Coinbase** - For the excellent wallet SDK and developer tools
+- 🎨 **Tailwind CSS** - For the amazing utility-first CSS framework
+- 💙 **Next.js Team** - For the powerful React framework
+- 🌟 **Open Source Community** - For inspiration and continuous support
+
+---
+
+<div align="center">
+
+### 🚀 Ready to revolutionize bill splitting?
+
+**[⭐ Star this repo](https://github.com/your-username/splitmate)** • **[🍴 Fork it](https://github.com/your-username/splitmate/fork)** • **[📖 Read the docs](./docs)**
+
+---
+
+*Built with ❤️ by the SplitMate team*
+
+**SplitMate** - *Building the future of expense sharing — fast, secure, and intelligent.*
+
+</div>
